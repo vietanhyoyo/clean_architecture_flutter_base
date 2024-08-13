@@ -3,7 +3,7 @@ import 'package:clean_architecture/features/daily_news/domain/entities/source.da
 class SourceModel extends SourceEntity {
   const SourceModel({
     super.id,
-    super.name,R
+    super.name,
   });
 
   factory SourceModel.fromJson(Map<String, dynamic> map) {
