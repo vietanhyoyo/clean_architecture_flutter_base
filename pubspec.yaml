@@ -62,6 +62,12 @@ dependencies:
   #cached image
   cached_network_image: ^3.3.1
 
+  #route
+  fluro: ^2.0.5
+
+  #size
+  flutter_screenutil: ^5.9.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

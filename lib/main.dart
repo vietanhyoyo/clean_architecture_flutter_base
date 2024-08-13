@@ -1,25 +1,39 @@
+import 'package:clean_architecture/config/routes/application.dart';
+import 'package:clean_architecture/config/routes/routes.dart';
 import 'package:clean_architecture/config/theme/app_themes.dart';
-import 'package:clean_architecture/features/daily_news/presentation/bloc/article/remote/bloc/remote_article_bloc.dart';
-import 'package:clean_architecture/features/daily_news/presentation/pages/home/daily_news.dart';
 import 'package:clean_architecture/injection_container.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   initializeDependencies();
+
+  /// Init router
+  final router = FluroRouter();
+  Routes.configureRoutes(router);
+  Application.router = router;
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<RemoteArticleBloc>(
-      create: (context) => sl()..add(const GetArticles()),
-      child: MaterialApp(
-          title: 'Flutter Demo', theme: theme(), home: const DailyNew()),
-    );
+    return ScreenUtilInit(
+        designSize: const Size(360, 690),
+        builder: (_, child) {
+          return MaterialApp(
+            title: 'Flutter Demo',
+            debugShowCheckedModeBanner: false,
+            themeMode: ThemeMode.light,
+            theme: AppTheme.currentTheme.lightTheme,
+            darkTheme: AppTheme.currentTheme.darkTheme,
+            onGenerateRoute: Application.router?.generator,
+            initialRoute: Routes.article,
+          );
+        });
   }
 }
