@@ -1,6 +1,5 @@
 import 'package:clean_architecture/config/routes/routes.dart';
 import 'package:clean_architecture/core/constants/app_colors.dart';
-import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
