@@ -5,6 +5,12 @@ import 'package:flutter/material.dart';
 
 final CustomTheme theme = CustomTheme(
     lightTheme: ThemeData.light().copyWith(
+      colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
+      scaffoldBackgroundColor: AppColors.white1,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.white,
+      ),
       primaryColor: AppColors.primary,
       primaryColorLight: AppColors.primary,
       primaryColorDark: AppColors.primary,
@@ -14,10 +20,21 @@ final CustomTheme theme = CustomTheme(
         unselectedItemColor: AppColors.black2,
       ),
       textTheme: textLightTheme,
-      scaffoldBackgroundColor: AppColors.white1,
+      dialogTheme: const DialogTheme(
+        titleTextStyle: TextStyle(
+          color: AppColors.primary,
+          fontWeight: FontWeight.bold,
+          fontSize: 20.0,
+        ),
+      ),
     ),
     darkTheme: ThemeData.dark().copyWith(
+      colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
       scaffoldBackgroundColor: AppColors.black1,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.white,
+      ),
       primaryColor: AppColors.primary,
       primaryColorLight: AppColors.primary,
       primaryColorDark: AppColors.primary,
@@ -27,4 +44,11 @@ final CustomTheme theme = CustomTheme(
         unselectedItemColor: AppColors.grey,
       ),
       textTheme: textTheme,
+      dialogTheme: const DialogTheme(
+        titleTextStyle: TextStyle(
+          color: AppColors.primary,
+          fontWeight: FontWeight.bold,
+          fontSize: 20.0,
+        ),
+      ),
     ));

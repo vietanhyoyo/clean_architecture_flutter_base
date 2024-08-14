@@ -1,6 +1,7 @@
 import 'package:clean_architecture/features/daily_news/presentation/bloc/article/remote/bloc/remote_article_bloc.dart';
 import 'package:clean_architecture/features/daily_news/presentation/pages/home/daily_news.dart';
 import 'package:clean_architecture/features/home/presentation/pages/home_page.dart';
+import 'package:clean_architecture/features/todo_list/presentation/cubit/todo_list/todo_list_cubit.dart';
 import 'package:clean_architecture/features/todo_list/presentation/pages/todo_list/todo_list_page.dart';
 import 'package:clean_architecture/injection_container.dart';
 import 'package:fluro/fluro.dart';
@@ -29,4 +30,5 @@ Handler articleHandler = Handler(
 
 Handler todoListHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
-        const TodoListPage());
+        BlocProvider(
+            create: (context) => TodoListCubit(), child: const TodoListPage()));

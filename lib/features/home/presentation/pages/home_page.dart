@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
 
   _buildAppbar() {
     return AppBar(
-      title: const Text('Home', style: TextStyle(color: Colors.black)),
+      title: const Text('Home'),
     );
   }
 

@@ -8,3 +8,12 @@ sealed class TodoListState extends Equatable {
 }
 
 final class TodoListInitial extends TodoListState {}
+
+final class TodoListLoaded extends TodoListState {
+  final List<String> todos;
+
+  const TodoListLoaded(this.todos);
+
+  @override
+  List<Object> get props => [todos];
+}

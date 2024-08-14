@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
             theme: AppTheme.currentTheme.lightTheme,
             darkTheme: AppTheme.currentTheme.darkTheme,
             onGenerateRoute: Application.router?.generator,
-            initialRoute: Routes.article,
+            initialRoute: Routes.todoList,
           );
         });
   }
