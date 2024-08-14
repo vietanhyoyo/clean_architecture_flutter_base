@@ -61,7 +61,8 @@ class TodoListPage extends StatelessWidget {
                                 trailing: IconButton(
                                   icon: const Icon(Icons.delete),
                                   onPressed: () {
-                                    _showDeleteConfirmationDialog(context, todo);
+                                    _showDeleteConfirmationDialog(
+                                        context, todo);
                                   },
                                 ),
                               )),
@@ -116,8 +117,18 @@ class AddTodoModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    final isDarkMode = Theme.of(parentContext).brightness == Brightness.dark;
+    final backgroundColor = isDarkMode ? AppColors.black : AppColors.white;
+
+    return Container(
       padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: backgroundColor, // Màu nền dựa trên chế độ sáng/tối
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(16.0),
+          topRight: Radius.circular(16.0),
+        ), // BorderRadius cho phần trên
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -137,12 +148,12 @@ class AddTodoModal extends StatelessWidget {
                 Navigator.pop(context); // Close the modal
               }
             },
-            child: const Text('Add Todo'),
             style: ElevatedButton.styleFrom(
               backgroundColor:
                   Theme.of(context).primaryColor, // Màu nền là màu chính
               foregroundColor: AppColors.white, // Màu chữ
             ),
+            child: const Text('Add Todo'),
           ),
           const SizedBox(height: 20)
         ],

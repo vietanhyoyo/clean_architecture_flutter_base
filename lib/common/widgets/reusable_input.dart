@@ -37,7 +37,7 @@ class ReusableInput extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hintText,
             prefixIcon: prefixIcon,
-             contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+             contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),

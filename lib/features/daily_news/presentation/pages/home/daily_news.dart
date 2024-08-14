@@ -17,7 +17,7 @@ class DailyNew extends StatelessWidget {
 
   _buildAppbar() {
     return AppBar(
-      title: const Text('Daily News', style: TextStyle(color: Colors.black)),
+      title: const Text('Daily News'),
     );
   }
 

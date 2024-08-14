@@ -20,13 +20,13 @@ class Routes {
     router.define(
       todoList,
       handler: todoListHandler,
-      transitionType: TransitionType.inFromLeft,
+      transitionType: TransitionType.inFromRight,
     );
 
     router.define(
       article,
       handler: articleHandler,
-      transitionType: TransitionType.inFromLeft,
+      transitionType: TransitionType.inFromRight,
     );
   }
 }
