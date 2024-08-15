@@ -7,9 +7,10 @@ final CustomTheme theme = CustomTheme(
     lightTheme: ThemeData.light().copyWith(
       colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
       scaffoldBackgroundColor: AppColors.white1,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.white,
+        titleTextStyle: AppText.textLG,
       ),
       primaryColor: AppColors.primary,
       primaryColorLight: AppColors.primary,
@@ -31,9 +32,10 @@ final CustomTheme theme = CustomTheme(
     darkTheme: ThemeData.dark().copyWith(
       colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
       scaffoldBackgroundColor: AppColors.black1,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.white,
+        titleTextStyle: AppText.textLG,
       ),
       primaryColor: AppColors.primary,
       primaryColorLight: AppColors.primary,

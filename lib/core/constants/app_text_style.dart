@@ -4,21 +4,10 @@ import 'package:clean_architecture/core/constants/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ResText {
-  static TextStyle titleLarge =
-      TextStyle(fontSize: AppDimens.d26.sp, fontWeight: FontWeight.w600);
-  static TextStyle whiteTitleLarge = TextStyle(
-      fontSize: AppDimens.d26.sp,
-      fontWeight: FontWeight.w600,
-      color: AppColors.white);
-  static const TextStyle cardName = TextStyle(height: 1);
-  static TextStyle songName = TextStyle(fontSize: 13.sp);
-  static TextStyle movieTitle =
-      TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600);
-  static const TextStyle primary = TextStyle(color: AppColors.primary);
-  static const TextStyle grey = TextStyle(color: AppColors.grey);
-  static const TextStyle white = TextStyle(color: AppColors.white);
-  static const TextStyle black2 = TextStyle(color: AppColors.black2);
+class AppText {
+
+  static TextStyle textLG =
+      TextStyle(fontSize: AppDimens.d24.sp, fontWeight: FontWeight.w700);
 }
 
 TextTheme textTheme = TextTheme(

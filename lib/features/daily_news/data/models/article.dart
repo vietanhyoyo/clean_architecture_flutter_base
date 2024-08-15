@@ -3,8 +3,7 @@ import 'package:clean_architecture/features/daily_news/domain/entities/article.d
 
 class ArticleModel extends ArticleEntity {
   const ArticleModel(
-      {
-      SourceModel? source,
+      {SourceModel? source,
       super.author,
       super.title,
       super.description,
