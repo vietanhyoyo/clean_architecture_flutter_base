@@ -7,10 +7,12 @@ class ImageService {
   Future<List<ImageModel>> getImageList() async {
     final String response =
         await rootBundle.loadString("assets/jsons/images.json");
-    final data = await json.decode(response);
+
+    final List<dynamic> data = await json.decode(response);
+
     final List<ImageModel> imageData = data.map((item) {
       return ImageModel.fromJson(item);
-    });
+    }).toList();
 
     return imageData;
   }

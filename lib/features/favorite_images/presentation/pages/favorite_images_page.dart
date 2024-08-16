@@ -10,23 +10,29 @@ class FavoriteImagesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FavoriteImageCubit, FavoriteImageState>(
-      builder: (context, state) {
-        return Scaffold(appBar: _buildAppbar(context), body: _buildBody(context));
-      }
-    );
+        builder: (context, state) {
+      return Scaffold(
+          appBar: _buildAppbar(context, state),
+          body: _buildBody(context, state));
+    });
   }
 
-  PreferredSizeWidget _buildAppbar(BuildContext context) {
+  PreferredSizeWidget _buildAppbar(
+      BuildContext context, FavoriteImageState state) {
     return AppBar(
-        title: const Row(
+        title: Row(
           children: [
-            Text('Favorite Images'),
-            Badge(
-                label: Text("2"),
-                child: Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: Icon(Icons.favorite, size: 30),
-                ))
+            const Text('Favorite Images'),
+            if (state is FavoriteImageLoaded)
+              Badge(
+                  label: Text(state.imageList
+                      .where((item) => item.like == true)
+                      .length
+                      .toString()),
+                  child: const Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Icon(Icons.favorite, size: 30),
+                  ))
           ],
         ),
         actions: [
@@ -51,7 +57,13 @@ class FavoriteImagesPage extends StatelessWidget {
         ]);
   }
 
-  Widget _buildBody(BuildContext context) {
-    return const SwipeBody();
+  Widget _buildBody(BuildContext context, FavoriteImageState state) {
+    if (state is FavoriteImageLoaded) {
+      return SwipeBody(
+        imageList: state.imageList,
+      );
+    } else {
+      return Container();
+    }
   }
 }
