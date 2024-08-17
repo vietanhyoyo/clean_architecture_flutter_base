@@ -23,6 +23,7 @@ class SwipeBody extends StatelessWidget {
         final image = imageList[index];
         return ImageCard(
           imageSrc: image.image ?? "",
+          name: image.name ?? "",
           isLike: image.like ?? false,
           onLike: () {
             context.read<FavoriteImageCubit>().changeLike(index);

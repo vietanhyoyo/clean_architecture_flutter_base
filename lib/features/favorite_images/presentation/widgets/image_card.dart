@@ -4,17 +4,44 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class ImageCard extends StatelessWidget {
+class ImageCard extends StatefulWidget {
   final String imageSrc;
+  final String name;
   final bool isLike;
   final void Function()? onLike;
   const ImageCard(
-      {super.key, required this.imageSrc, required this.isLike, this.onLike});
+      {super.key,
+      required this.imageSrc,
+      required this.isLike,
+      this.onLike,
+      required this.name});
+
+  @override
+  State<ImageCard> createState() => _ImageCardState();
+}
+
+class _ImageCardState extends State<ImageCard> {
+  late bool _isLike;
+
+  @override
+  void initState() {
+    super.initState();
+    _isLike = widget.isLike;
+  }
+
+  void _toggleLike() {
+    setState(() {
+      _isLike = !_isLike;
+    });
+    if (widget.onLike != null) {
+      widget.onLike!();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-        imageUrl: imageSrc,
+        imageUrl: widget.imageSrc,
         imageBuilder: (context, imageProvider) => Padding(
               padding: const EdgeInsetsDirectional.only(
                   start: 14, end: 14, bottom: 14),
@@ -25,10 +52,12 @@ class ImageCard extends StatelessWidget {
                     leading: Column(
                       children: [
                         GestureDetector(
-                          onTap: onLike,
-                          child: Icon(Icons.favorite,
-                              size: 30,
-                              color: isLike ? AppColors.red : AppColors.white),
+                          onTap: _toggleLike,
+                          child: Icon(
+                            Icons.favorite,
+                            size: 30,
+                            color: _isLike ? AppColors.red : AppColors.white,
+                          ),
                         ),
                         const Text("Like image",
                             style:
@@ -36,8 +65,8 @@ class ImageCard extends StatelessWidget {
                       ],
                     ),
                     title: const Text(""),
-                    trailing: const Text("Image 01",
-                        style: TextStyle(color: AppColors.white)),
+                    trailing: Text(widget.name,
+                        style: const TextStyle(color: AppColors.white)),
                   ),
                   child: Stack(
                     children: [

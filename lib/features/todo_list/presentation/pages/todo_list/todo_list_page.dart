@@ -58,6 +58,8 @@ class TodoListPage extends StatelessWidget {
                               child: Card(
                                   child: ListTile(
                                 title: Text(todo),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0, vertical: 8.0),
                                 trailing: IconButton(
                                   icon: const Icon(Icons.delete),
                                   onPressed: () {

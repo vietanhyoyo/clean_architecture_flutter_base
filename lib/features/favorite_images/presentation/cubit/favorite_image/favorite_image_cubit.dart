@@ -19,15 +19,17 @@ class FavoriteImageCubit extends Cubit<FavoriteImageState> {
       final data = await _getImageListUseCase();
       final List<ImageEntity> favoriteList = [];
       favoriteList.addAll(data.where((item) => item.like == true));
-      emit(FavoriteImageLoaded(imageList: data));
+      emit(FavoriteImageLoaded(
+          imageList: data,
+          favoriteTotal: favoriteList.length,
+          showFavorite: false));
     } catch (e) {
       emit(const FavoriteImageError('Failed to load images'));
     }
   }
 
-  void changeLike(int index) {
+  void changeLike(int index) async {
     if (state is FavoriteImageLoaded) {
-      print("Click");
       final currentState = state as FavoriteImageLoaded;
       final List<ImageEntity> imageList = currentState.imageList;
 
@@ -40,7 +42,27 @@ class FavoriteImageCubit extends Cubit<FavoriteImageState> {
           like: !likeState);
       imageList[index] = changeImage;
 
-      emit(FavoriteImageLoaded(imageList: imageList));
+      final List<ImageEntity> favoriteList = [];
+      favoriteList.addAll(imageList.where((item) => item.like == true));
+
+      emit(FavoriteImageLoaded(
+          imageList: imageList,
+          favoriteTotal: favoriteList.length,
+          showFavorite: false));
+    }
+  }
+
+  void handleChangeShowState(bool value) async {
+    if (state is FavoriteImageLoaded) {
+      final currentState = state as FavoriteImageLoaded;
+
+      emit(FavoriteImageInitial());
+      await Future.delayed(const Duration(milliseconds: 500));
+      emit(FavoriteImageLoaded(
+          imageList: currentState.imageList,
+          favoriteTotal:
+              currentState.imageList.where((item) => item.like == true).length,
+          showFavorite: value));
     }
   }
 }

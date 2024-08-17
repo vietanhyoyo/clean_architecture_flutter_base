@@ -11,12 +11,17 @@ final class FavoriteImageInitial extends FavoriteImageState {}
 
 final class FavoriteImageLoaded extends FavoriteImageState {
   final List<ImageEntity> imageList;
+  final int favoriteTotal;
+  final bool showFavorite;
 
-  const FavoriteImageLoaded(
-      {required this.imageList});
+  const FavoriteImageLoaded({
+    required this.imageList,
+    required this.favoriteTotal,
+    required this.showFavorite,
+  });
 
   @override
-  List<Object> get props => [imageList];
+  List<Object> get props => [...imageList, favoriteTotal, showFavorite];
 }
 
 final class FavoriteImageError extends FavoriteImageState {

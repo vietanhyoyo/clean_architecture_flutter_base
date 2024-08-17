@@ -50,10 +50,33 @@ class HomePage extends StatelessWidget {
       {required String title, required String route, required IconData icon}) {
     return Card(
       child: ListTile(
-        leading: Icon(
-          icon,
-          size: 40.0,
-          color: AppColors.primary,
+        contentPadding: const EdgeInsets.all(12.0),
+        leading: Container(
+          width: 50.0,
+          height: 50.0,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColors.primary,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: -5,
+                blurRadius: 10,
+                offset: const Offset(-2, -2),
+              ),
+              BoxShadow(
+                color: Colors.white.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 10,
+                offset: const Offset(2, 2),
+              ),
+            ],
+          ),
+          child: Icon(
+            icon,
+            size: 30.0,
+            color: AppColors.white,
+          ),
         ),
         title: Text(title, style: const TextStyle(fontSize: 18.0)),
         onTap: () {
