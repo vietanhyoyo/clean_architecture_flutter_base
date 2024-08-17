@@ -34,5 +34,11 @@
         "name": "Nutrium",
         "image": "https://i.pinimg.com/564x/1f/ff/50/1fff5084f5ec2416cfe57f6370cc9d1c.jpg",
         "like": false
+    },
+    {
+        "id": "7",
+        "name": "Poster",
+        "image": "https://i.pinimg.com/564x/18/9d/96/189d9669a566f8d5b1178bef9b42b03e.jpg",
+        "like": false
     }
 ]
