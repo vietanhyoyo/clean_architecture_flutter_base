@@ -8,7 +8,12 @@ import 'package:clean_architecture/features/favorite_images/data/repository/imag
 import 'package:clean_architecture/features/favorite_images/domain/repository/image_repository.dart';
 import 'package:clean_architecture/features/favorite_images/domain/usecases/get_image_list.dart';
 import 'package:clean_architecture/features/favorite_images/presentation/cubit/favorite_image/favorite_image_cubit.dart';
+import 'package:clean_architecture/features/food/data/data_sources/category_service.dart';
+import 'package:clean_architecture/features/food/data/repository/category_repository_impl.dart';
+import 'package:clean_architecture/features/food/domain/repository/category_repository.dart';
+import 'package:clean_architecture/features/food/domain/usecases/get_category_list.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/bottom_bar/botton_bar_cubit.dart';
+import 'package:clean_architecture/features/food/presentation/cubit/food_home/food_home_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -21,13 +26,18 @@ Future<void> initializeDependencies() async {
   // Dependencies
   sl.registerSingleton<NewsApiService>(NewsApiService(sl()));
   sl.registerSingleton<ImageService>(ImageService());
+  sl.registerSingleton<CategoryService>(CategoryService());
 
   sl.registerSingleton<ArticleRepository>(ArticleRepositoryImpl(sl()));
   sl.registerSingleton<ImageRepository>(ImageRepositoryImpl(sl()));
+  sl.registerSingleton<CategoryRepository>(CategoryRepositoryImpl(sl()));
 
   // UseCases
   sl.registerSingleton<GetArticleUseCase>(GetArticleUseCase(sl()));
-  sl.registerLazySingleton<GetImageListUseCase>(() => GetImageListUseCase(sl()));
+  sl.registerLazySingleton<GetImageListUseCase>(
+      () => GetImageListUseCase(sl()));
+  sl.registerLazySingleton<GetCategoryListUseCase>(
+      () => GetCategoryListUseCase(sl()));
 
   // Blocs
   sl.registerFactory<RemoteArticleBloc>(() => RemoteArticleBloc(sl()));
@@ -35,5 +45,5 @@ Future<void> initializeDependencies() async {
   // Cubits
   sl.registerFactory<FavoriteImageCubit>(() => FavoriteImageCubit(sl()));
   sl.registerFactory<BottomBarCubit>(() => BottomBarCubit());
-
+  sl.registerFactory<FoodHomeCubit>(() => FoodHomeCubit(sl()));
 }

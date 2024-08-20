@@ -1,7 +1,9 @@
 import 'package:clean_architecture/features/food/presentation/cubit/bottom_bar/botton_bar_cubit.dart';
+import 'package:clean_architecture/features/food/presentation/cubit/food_home/food_home_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/pages/food_favorite_page.dart';
 import 'package:clean_architecture/features/food/presentation/pages/food_home_page.dart';
 import 'package:clean_architecture/features/food/presentation/pages/food_viewed_page.dart';
+import 'package:clean_architecture/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,7 +11,10 @@ class FoodMainPage extends StatelessWidget {
   FoodMainPage({super.key});
 
   final List<Widget> _pages = [
-    FoodHomePage(),
+    BlocProvider(
+      create: (context) => sl<FoodHomeCubit>(),
+      child: FoodHomePage(),
+    ),
     FoodViewedPage(),
     FoodFavoritePage()
   ];

@@ -1,17 +1,9 @@
 import 'package:clean_architecture/core/constants/app_colors.dart';
-import 'package:clean_architecture/core/utils/helper.dart';
+import 'package:clean_architecture/features/food/domain/entities/category.dart';
 import 'package:flutter/material.dart';
 
-class FoodItem {
-  final String name;
-  final int price;
-  final String image;
-
-  FoodItem({required this.name, required this.price, required this.image});
-}
-
 class FoodCard extends StatelessWidget {
-  final FoodItem foodItem;
+  final CategoryEntity foodItem;
 
   const FoodCard({super.key, required this.foodItem});
 
@@ -31,22 +23,27 @@ class FoodCard extends StatelessWidget {
           ClipRRect(
             borderRadius:
                 const BorderRadius.vertical(top: Radius.circular(6.0)),
-            child:
-                Image.network(foodItem.image, fit: BoxFit.cover, height: 100),
+            child: Image.asset(
+              foodItem.image ?? "",
+              fit: BoxFit.cover,
+              height: 130,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  foodItem.name,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16.0),
+                Center(
+                  child: Text(
+                    foodItem.name ?? "",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 4.0),
-                Text('${Helper.addThousandSeparator(foodItem.price)} VND',
-                    style: TextStyle(color: Colors.grey[600])),
               ],
             ),
           ),
