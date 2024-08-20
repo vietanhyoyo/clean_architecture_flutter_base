@@ -7,6 +7,7 @@ class Routes {
   static String todoList = "/todo-list";
   static String article = "/article";
   static String favoriteImages = "/favorite_images";
+  static String foodHome = "/food_home";
 
   /// Setup route for the app
   static void configureRoutes(FluroRouter router) {
@@ -33,6 +34,12 @@ class Routes {
     router.define(
       favoriteImages,
       handler: favoriteImagesHandler,
+      transitionType: TransitionType.inFromRight,
+    );
+
+    router.define(
+      foodHome,
+      handler: foodHomeHandler,
       transitionType: TransitionType.inFromRight,
     );
   }

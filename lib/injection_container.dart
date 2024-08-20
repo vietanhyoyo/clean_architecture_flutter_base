@@ -8,6 +8,7 @@ import 'package:clean_architecture/features/favorite_images/data/repository/imag
 import 'package:clean_architecture/features/favorite_images/domain/repository/image_repository.dart';
 import 'package:clean_architecture/features/favorite_images/domain/usecases/get_image_list.dart';
 import 'package:clean_architecture/features/favorite_images/presentation/cubit/favorite_image/favorite_image_cubit.dart';
+import 'package:clean_architecture/features/food/presentation/cubit/bottom_bar/botton_bar_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -33,5 +34,6 @@ Future<void> initializeDependencies() async {
 
   // Cubits
   sl.registerFactory<FavoriteImageCubit>(() => FavoriteImageCubit(sl()));
+  sl.registerFactory<BottomBarCubit>(() => BottomBarCubit());
 
 }

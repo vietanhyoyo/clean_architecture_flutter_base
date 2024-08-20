@@ -2,6 +2,8 @@ import 'package:clean_architecture/features/daily_news/presentation/bloc/article
 import 'package:clean_architecture/features/daily_news/presentation/pages/home/daily_news.dart';
 import 'package:clean_architecture/features/favorite_images/presentation/cubit/favorite_image/favorite_image_cubit.dart';
 import 'package:clean_architecture/features/favorite_images/presentation/pages/favorite_images_page.dart';
+import 'package:clean_architecture/features/food/presentation/cubit/bottom_bar/botton_bar_cubit.dart';
+import 'package:clean_architecture/features/food/presentation/pages/food_main_page.dart';
 import 'package:clean_architecture/features/home/presentation/pages/home_page.dart';
 import 'package:clean_architecture/features/todo_list/presentation/cubit/todo_list/todo_list_cubit.dart';
 import 'package:clean_architecture/features/todo_list/presentation/pages/todo_list/todo_list_page.dart';
@@ -40,3 +42,10 @@ Handler favoriteImagesHandler = Handler(
         BlocProvider<FavoriteImageCubit>(
             create: (context) => sl<FavoriteImageCubit>(),
             child: const FavoriteImagesPage()));
+
+Handler foodHomeHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
+        BlocProvider(
+          create: (context) => sl<BottomBarCubit>(),
+          child: FoodMainPage(),
+        ));

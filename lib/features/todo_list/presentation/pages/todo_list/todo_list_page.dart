@@ -1,4 +1,4 @@
-import 'package:clean_architecture/common/widgets/reusable_input.dart';
+import 'package:clean_architecture/core/utils/widgets/reusable_input.dart';
 import 'package:clean_architecture/core/constants/app_colors.dart';
 import 'package:clean_architecture/features/todo_list/presentation/cubit/todo_list/todo_list_cubit.dart';
 import 'package:flutter/material.dart';

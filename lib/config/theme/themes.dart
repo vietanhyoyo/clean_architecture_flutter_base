@@ -10,7 +10,7 @@ final CustomTheme theme = CustomTheme(
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.white,
-        titleTextStyle: AppText.textLG,
+        titleTextStyle: AppText.titleLG,
       ),
       primaryColor: AppColors.primary,
       primaryColorLight: AppColors.primary,
@@ -35,7 +35,7 @@ final CustomTheme theme = CustomTheme(
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.white,
-        titleTextStyle: AppText.textLG,
+        titleTextStyle: AppText.titleLG,
       ),
       primaryColor: AppColors.primary,
       primaryColorLight: AppColors.primary,

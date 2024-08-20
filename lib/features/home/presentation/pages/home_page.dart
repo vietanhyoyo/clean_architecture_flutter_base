@@ -41,6 +41,13 @@ class HomePage extends StatelessWidget {
             route: Routes.favoriteImages,
             icon: Icons.image,
           ),
+          const SizedBox(height: 16.0),
+          _buildCard(
+            context,
+            title: 'Food',
+            route: Routes.foodHome,
+            icon: Icons.food_bank,
+          ),
         ],
       ),
     );
