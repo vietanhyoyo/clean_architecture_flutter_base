@@ -13,7 +13,7 @@ class FoodMainPage extends StatelessWidget {
   final List<Widget> _pages = [
     BlocProvider(
       create: (context) => sl<FoodHomeCubit>(),
-      child: FoodHomePage(),
+      child: const FoodHomePage(),
     ),
     FoodViewedPage(),
     FoodFavoritePage()

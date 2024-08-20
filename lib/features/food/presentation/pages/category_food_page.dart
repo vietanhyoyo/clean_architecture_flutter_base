@@ -1,30 +1,12 @@
+import 'package:clean_architecture/features/food/presentation/cubit/category_food/category_food_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/pages/detail_food_page.dart';
 import 'package:clean_architecture/features/food/presentation/widgets/food_detail_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategoryFoodPage extends StatelessWidget {
-  CategoryFoodPage({super.key});
-
-  final List<FoodDetailCardProp> listFool = [
-    FoodDetailCardProp(
-      name: "Pizza",
-      price: 150000,
-      image:
-          "https://i.pinimg.com/564x/9c/07/9f/9c079f0d8799b6844543ba27a30d2a76.jpg",
-      like: 100,
-      isLiked: true,
-      following: 50,
-    ),
-    FoodDetailCardProp(
-      name: "Burger",
-      price: 120000,
-      image:
-          "https://i.pinimg.com/564x/9c/07/9f/9c079f0d8799b6844543ba27a30d2a76.jpg",
-      like: 80,
-      isLiked: false,
-      following: 30,
-    ),
-  ];
+  const CategoryFoodPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,21 +23,33 @@ class CategoryFoodPage extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    return ListView.builder(
-      itemCount: listFool.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => DetailFoodPage()),
-                );
-              },
-              child: FoodDetailCard(foodItem: listFool[index])),
-        );
+    return BlocBuilder<CategoryFoodCubit, CategoryFoodState>(
+      builder: (context, state) {
+        if (state is CategoryFoodInitial) {
+          return const Center(
+            child: CupertinoActivityIndicator(),
+          );
+        } else if (state is CategoryFoodLoaded) {
+          return ListView.builder(
+            itemCount: state.productList.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DetailFoodPage()),
+                      );
+                    },
+                    child: FoodDetailCard(foodItem: state.productList[index])),
+              );
+            },
+          );
+        } else {
+          return const SizedBox();
+        }
       },
     );
   }

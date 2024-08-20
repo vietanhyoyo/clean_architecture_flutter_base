@@ -1,28 +1,11 @@
 import 'package:clean_architecture/core/constants/app_colors.dart';
-import 'package:clean_architecture/core/utils/helper.dart';
+import 'package:clean_architecture/features/food/domain/entities/product.dart';
 import 'package:clean_architecture/features/food/presentation/widgets/follow_info.dart';
 import 'package:clean_architecture/features/food/presentation/widgets/like_info.dart';
 import 'package:flutter/material.dart';
 
-class FoodDetailCardProp {
-  final String name;
-  final int price;
-  final String image;
-  final int like;
-  final int following;
-  final bool isLiked;
-
-  FoodDetailCardProp(
-      {required this.name,
-      required this.price,
-      required this.image,
-      required this.like,
-      required this.isLiked,
-      required this.following});
-}
-
 class FoodDetailCard extends StatelessWidget {
-  final FoodDetailCardProp foodItem;
+  final ProductEntity foodItem;
 
   const FoodDetailCard({super.key, required this.foodItem});
 
@@ -42,8 +25,8 @@ class FoodDetailCard extends StatelessWidget {
           ClipRRect(
             borderRadius:
                 const BorderRadius.vertical(top: Radius.circular(6.0)),
-            child:
-                Image.network(foodItem.image, fit: BoxFit.cover, height: 250),
+            child: Image.asset(foodItem.image ?? "",
+                fit: BoxFit.cover, height: 250),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -51,23 +34,16 @@ class FoodDetailCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  foodItem.name,
+                  foodItem.title ?? "",
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 16.0),
                 ),
                 const SizedBox(height: 4.0),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('${Helper.addThousandSeparator(foodItem.price)} VND',
-                        style: TextStyle(color: Colors.grey[600])),
-                    Row(
-                      children: [
-                        LikeInfo(foodItem.like, foodItem.isLiked),
-                        const SizedBox(width: 6.0),
-                        FollowInfo(foodItem.following),
-                      ],
-                    ),
+                    LikeInfo(int.tryParse(foodItem.favorite ?? "0") ?? 0, true),
+                    const SizedBox(width: 6.0),
+                    FollowInfo(int.tryParse(foodItem.view ?? "0") ?? 0),
                   ],
                 ),
               ],
