@@ -7,6 +7,7 @@ import 'package:clean_architecture/features/food/domain/usecases/get_products_by
 import 'package:clean_architecture/features/food/presentation/cubit/bottom_bar/botton_bar_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/category_food/category_food_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/detail_food/detail_food_cubit.dart';
+import 'package:clean_architecture/features/food/presentation/cubit/food_main/food_main_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/pages/category_food_page.dart';
 import 'package:clean_architecture/features/food/presentation/pages/detail_food_page.dart';
 import 'package:clean_architecture/features/food/presentation/pages/food_main_page.dart';
@@ -50,11 +51,15 @@ Handler favoriteImagesHandler = Handler(
             child: const FavoriteImagesPage()));
 
 Handler foodHomeHandler = Handler(
-    handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
-        BlocProvider(
-          create: (context) => sl<BottomBarCubit>(),
-          child: FoodMainPage(),
-        ));
+  handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
+      MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (context) => sl<BottomBarCubit>()),
+      BlocProvider(create: (context) => sl<FoodMainCubit>()),
+    ],
+    child: FoodMainPage(),
+  ),
+);
 
 Handler categoryFoodHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
@@ -72,6 +77,6 @@ Handler detailFoodHandler = Handler(
   final id = params['id']?.first;
   return BlocProvider(
     create: (context) => DetailFoodCubit(sl<GetProductUseCase>(), id!),
-    child: DetailFoodPage(),
+    child: const DetailFoodPage(),
   );
 });

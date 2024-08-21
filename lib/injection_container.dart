@@ -18,7 +18,7 @@ import 'package:clean_architecture/features/food/domain/usecases/get_category_li
 import 'package:clean_architecture/features/food/domain/usecases/get_product.dart';
 import 'package:clean_architecture/features/food/domain/usecases/get_products_by_category.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/bottom_bar/botton_bar_cubit.dart';
-import 'package:clean_architecture/features/food/presentation/cubit/food_home/food_home_cubit.dart';
+import 'package:clean_architecture/features/food/presentation/cubit/food_main/food_main_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -55,5 +55,5 @@ Future<void> initializeDependencies() async {
   // Cubits
   sl.registerFactory<FavoriteImageCubit>(() => FavoriteImageCubit(sl()));
   sl.registerFactory<BottomBarCubit>(() => BottomBarCubit());
-  sl.registerFactory<FoodHomeCubit>(() => FoodHomeCubit(sl()));
+  sl.registerFactory<FoodMainCubit>(() => FoodMainCubit(sl()));
 }

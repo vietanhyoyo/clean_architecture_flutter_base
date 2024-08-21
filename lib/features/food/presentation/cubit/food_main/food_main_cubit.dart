@@ -3,21 +3,21 @@ import 'package:clean_architecture/features/food/domain/entities/category.dart';
 import 'package:clean_architecture/features/food/domain/usecases/get_category_list.dart';
 import 'package:equatable/equatable.dart';
 
-part 'food_home_state.dart';
+part 'food_main_state.dart';
 
-class FoodHomeCubit extends Cubit<FoodHomeState> {
+class FoodMainCubit extends Cubit<FoodMainState> {
   final GetCategoryListUseCase _getCategoryListUseCate;
 
-  FoodHomeCubit(this._getCategoryListUseCate) : super(FoodHomeInitial()) {
+  FoodMainCubit(this._getCategoryListUseCate) : super(FoodMainInitial()) {
     _getCategoryList();
   }
 
   void _getCategoryList() async {
     try {
       final data = await _getCategoryListUseCate();
-      emit(FoodHomeLoaded(data));
+      emit(FoodMainLoaded(data));
     } catch (e) {
-      emit(const FoodHomeError('Failed to load category'));
+      emit(const FoodMainError('Failed to load category'));
     }
   }
 }
