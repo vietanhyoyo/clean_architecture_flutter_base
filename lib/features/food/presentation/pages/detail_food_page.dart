@@ -5,7 +5,6 @@ import 'package:clean_architecture/features/food/presentation/widgets/follow_inf
 import 'package:clean_architecture/features/food/presentation/widgets/like_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FoodDetaiProp {
@@ -33,65 +32,7 @@ class FoodDetaiProp {
 }
 
 class DetailFoodPage extends StatelessWidget {
-  DetailFoodPage({super.key});
-
-  final food = FoodDetaiProp(
-      name: "Bún bò Huế",
-      price: 45000,
-      image:
-          "https://i.pinimg.com/564x/04/b6/f9/04b6f958f5f053fbaefccddd1007aa48.jpg",
-      like: 899,
-      isLiked: true,
-      following: 400,
-      description:
-          "Bún bò Huế là một món ăn đặc sản nổi tiếng của thành phố Huế, Việt Nam. Món ăn này nổi bật với nước dùng đậm đà, có hương vị thơm ngon từ sả, mắm ruốc, và ớt sa tế. Thịt bò mềm, giò heo béo ngậy, và chả cua tạo nên sự đa dạng trong hương vị và kết cấu. Bún bò Huế thường được ăn kèm với rau sống, chanh, và ớt tươi, tạo nên một trải nghiệm ẩm thực đậm đà, cay nồng, đặc trưng của miền Trung Việt Nam.",
-      ingredients: """
-- 1 kg xương bò (xương ống hoặc xương cổ)
-- 500g thịt bò (nạm, gầu, bắp, hoặc gân)
-- 1 củ hành tây
-- 1 củ gừng
-- 5-7 quả hồi
-- 1-2 thanh quế
-- 3-4 miếng đinh hương
-- 1 quả thảo quả (tùy chọn)
-- 1 củ cải trắng
-- 2-3 nhánh hành lá
-- Rau thơm (ngò gai, húng quế, rau mùi)
-- 500g bánh phở tươi hoặc khô
-- Nước mắm, muối, đường, tiêu, bột ngọt (tùy chọn)
-- Giá đỗ, chanh, ớt tươi, và tương ớt để ăn kèm
-""",
-      cooking: """
-1 - Sơ chế và chần thịt
-
-- Bạn bắc lên bếp 1 nồi nước và cho vào nồi hành tím đã đập dập rồi nấu trên bếp ở nhiệt độ cao.
-
-- Khi nước sôi, bạn cho thịt bò và xương heo đã sơ chế vào và chần khoảng 3 phút để loại bỏ mùi hôi. Sau đó, bạn vớt thịt ra và cho ngay vào tô nước lạnh.
-
-2 - Sơ chế các nguyên liệu khác
-
-- Hành tím mua về bạn lột vỏ 3 củ, sau đó rửa sạch và đập dập, 2 củ còn lại thì rửa sạch và để ráo.
-
-- Hành tây cắt bỏ rễ, và rửa sạch. Bạn rửa sạch gừng và để ráo.
-
-- Nướng hành tây, 2 củ hành tím và gừng trên bếp khoảng 2 phút đến khi dậy mùi thơm.
-
-- Bạn cho phần gia vị nấu phở bò vào chảo và rang trên bếp ở nhiệt độ trung bình nhỏ trong 4 phút đến khi dậy mùi thơm. Cho các gia vị vừa rang vào túi lọc có sẵn và cột chặt miệng túi lại.
-
-3 - Nấu nước dùng
-
-- Bạn cho vào nồi 1.5 lít nước cùng thịt bò và xương heo đã chần rồi đậy nắp lại, hầm trong 1 tiếng. Trong lúc hầm nước dùng, bạn thường xuyên mở nắp nồi và hớt sạch bọt để nước dùng được trong hơn nhé!
-
-- Khi nước sôi, bạn cho hành tây, hành tím, gừng đã nướng thơm và túi gia vị nấu phở đã rang vào nồi.
-
-- Tiếp theo, bạn thêm vào nồi 2 muỗng canh đường phèn, 2 muỗng cà phê muối, 1.5 muỗng cà phê bột ngọt, 1.5 muỗng cà phê hạt nêm rồi khuấy đều, nêm nếm lại gia vị cho vừa ăn và nắp lại 3 phút rồi tắt bếp là hoàn thành.
-
-4 - Hoàn thành
-
-- Bạn vớt thịt bò trong nồi nước dùng ra và cắt thành những lát vừa ăn.
-
-- Sau đó, cho bánh phở ra tô, xếp thịt bò lên trên rồi chan nước dùng và thêm ít ớt cắt lát, rau ăn phở như ngò gai, hành lá,... 
-""");
+  const DetailFoodPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +44,28 @@ class DetailFoodPage extends StatelessWidget {
 
   _buildAppbar(BuildContext context) {
     return AppBar(
-      title: const Text('Detail'),
+      title: BlocBuilder<DetailFoodCubit, DetailFoodState>(
+        builder: (context, state) {
+          if (state is DetailFoodInitial) {
+            return const Text('Detail');
+          } else if (state is DetailFoodLoaded) {
+            return Text(state.product.title ?? "",
+                style: AppText.titleSM,
+                textAlign: TextAlign.center,
+                softWrap: true,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis);
+          } else {
+            return const Text('Detail');
+          }
+        },
+      ),
+      actions: const [
+        Padding(
+          padding: EdgeInsets.all(12.0),
+          child: Icon(Icons.menu, size: 30, color: Colors.transparent),
+        )
+      ],
     );
   }
 
