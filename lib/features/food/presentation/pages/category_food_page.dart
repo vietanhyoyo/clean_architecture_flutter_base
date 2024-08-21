@@ -1,12 +1,16 @@
+import 'package:clean_architecture/config/routes/application.dart';
+import 'package:clean_architecture/config/routes/routes.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/category_food/category_food_cubit.dart';
-import 'package:clean_architecture/features/food/presentation/pages/detail_food_page.dart';
 import 'package:clean_architecture/features/food/presentation/widgets/food_detail_card.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategoryFoodPage extends StatelessWidget {
-  const CategoryFoodPage({super.key});
+  final String title;
+
+  const CategoryFoodPage(this.title, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +22,7 @@ class CategoryFoodPage extends StatelessWidget {
 
   _buildAppbar() {
     return AppBar(
-      title: const Text('Category'),
+      title: Text(title),
     );
   }
 
@@ -37,11 +41,10 @@ class CategoryFoodPage extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DetailFoodPage()),
-                      );
+                      Application.navigateTo(
+                          context,
+                          "${Routes.detailFood}/${state.productList[index].id}",
+                          TransitionType.inFromRight);
                     },
                     child: FoodDetailCard(foodItem: state.productList[index])),
               );

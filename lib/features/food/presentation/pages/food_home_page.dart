@@ -1,7 +1,6 @@
 import 'package:clean_architecture/config/routes/application.dart';
 import 'package:clean_architecture/config/routes/routes.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/food_home/food_home_cubit.dart';
-import 'package:clean_architecture/features/food/presentation/pages/category_food_page.dart';
 import 'package:clean_architecture/features/food/presentation/widgets/food_card.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,7 +36,7 @@ class FoodHomePage extends StatelessWidget {
                     onTap: () {
                       Application.navigateTo(
                           context,
-                          "${Routes.categoryFood}/${foodItem.id}",
+                          "${Routes.categoryFood}/${foodItem.id}/${foodItem.name}",
                           TransitionType.inFromRight);
                     });
               },

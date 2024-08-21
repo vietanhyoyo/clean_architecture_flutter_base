@@ -1,8 +1,12 @@
 import 'package:clean_architecture/core/constants/app_colors.dart';
 import 'package:clean_architecture/core/constants/app_text_style.dart';
+import 'package:clean_architecture/features/food/presentation/cubit/detail_food/detail_food_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/widgets/follow_info.dart';
 import 'package:clean_architecture/features/food/presentation/widgets/like_info.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FoodDetaiProp {
   final String name;
@@ -92,98 +96,128 @@ class DetailFoodPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppbar(),
+      appBar: _buildAppbar(context),
       body: _buildBody(context),
     );
   }
 
-  _buildAppbar() {
+  _buildAppbar(BuildContext context) {
     return AppBar(
       title: const Text('Detail'),
     );
   }
 
   Widget _buildBody(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(children: [
-        Stack(children: [
-          Image.network(
-            "https://i.pinimg.com/564x/54/05/e2/5405e26766918d16b291b05773557410.jpg",
-            height: 300,
-            fit: BoxFit.cover,
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(12.0),
+    return BlocBuilder<DetailFoodCubit, DetailFoodState>(
+        builder: (context, state) {
+      if (state is DetailFoodInitial) {
+        return const Center(
+          child: CupertinoActivityIndicator(),
+        );
+      } else if (state is DetailFoodLoaded) {
+        return SingleChildScrollView(
+          child: Column(children: [
+            Stack(children: [
+              Image.asset(
+                state.product.image ?? "",
+                height: 300,
+                fit: BoxFit.cover,
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(12.0),
+                    ),
+                  ),
+                  child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: LikeInfo(
+                          int.tryParse(state.product.favorite ?? "0") ?? 0,
+                          true)),
                 ),
               ),
-              child: const Padding(
-                  padding: EdgeInsets.all(8.0), child: LikeInfo(69, true)),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(12.0),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12.0),
+                    ),
+                  ),
+                  child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FollowInfo(
+                        int.tryParse(state.product.view ?? "0") ?? 0,
+                      )),
                 ),
               ),
-              child: const Padding(
-                  padding: EdgeInsets.all(8.0), child: FollowInfo(390)),
-            ),
-          ),
-        ]),
-        Padding(
-          padding: const EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
-          child: Text(food.description, style: AppText.bodySM),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            child: Column(children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("Nguyên liệu", style: AppText.titleMD),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(food.ingredients),
-              ),
             ]),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(12.0),
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
+              child: Text(state.product.intro ?? "", style: AppText.bodySM),
             ),
-            child: Column(children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("Cách chế biến", style: AppText.titleMD),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text("Nguyên liệu", style: AppText.titleMD),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(state.product.ingredients ?? ""),
+                      ),
+                    ]),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(food.cooking),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text("Cách chế biến", style: AppText.titleMD),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(state.product.instructions ?? ""),
+                      ),
+                    ]),
               ),
-            ]),
-          ),
-        )
-      ]),
-    );
+            )
+          ]),
+        );
+      } else {
+        return const SizedBox();
+      }
+    });
   }
 }

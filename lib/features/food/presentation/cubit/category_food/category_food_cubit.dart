@@ -7,17 +7,16 @@ part 'category_food_state.dart';
 
 class CategoryFoodCubit extends Cubit<CategoryFoodState> {
   final GetProductsByCategoryUseCase _getProductsByCategoryUseCate;
-  final String categoryId;
+  final String _categoryId;
 
-  CategoryFoodCubit(this._getProductsByCategoryUseCate, this.categoryId)
+  CategoryFoodCubit(this._getProductsByCategoryUseCate, this._categoryId)
       : super(CategoryFoodInitial()) {
-    _getProductsByCategory(categoryId);
+    _getProductsByCategory(_categoryId);
   }
 
   void _getProductsByCategory(String id) async {
     try {
       final data = await _getProductsByCategoryUseCate(params: id);
-      print(data.length);
       emit(CategoryFoodLoaded(data));
     } catch (e) {
       emit(const CategoryFoodError('Failed to load products'));

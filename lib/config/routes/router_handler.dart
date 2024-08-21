@@ -2,10 +2,13 @@ import 'package:clean_architecture/features/daily_news/presentation/bloc/article
 import 'package:clean_architecture/features/daily_news/presentation/pages/home/daily_news.dart';
 import 'package:clean_architecture/features/favorite_images/presentation/cubit/favorite_image/favorite_image_cubit.dart';
 import 'package:clean_architecture/features/favorite_images/presentation/pages/favorite_images_page.dart';
+import 'package:clean_architecture/features/food/domain/usecases/get_product.dart';
 import 'package:clean_architecture/features/food/domain/usecases/get_products_by_category.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/bottom_bar/botton_bar_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/category_food/category_food_cubit.dart';
+import 'package:clean_architecture/features/food/presentation/cubit/detail_food/detail_food_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/pages/category_food_page.dart';
+import 'package:clean_architecture/features/food/presentation/pages/detail_food_page.dart';
 import 'package:clean_architecture/features/food/presentation/pages/food_main_page.dart';
 import 'package:clean_architecture/features/home/presentation/pages/home_page.dart';
 import 'package:clean_architecture/features/todo_list/presentation/cubit/todo_list/todo_list_cubit.dart';
@@ -56,9 +59,19 @@ Handler foodHomeHandler = Handler(
 Handler categoryFoodHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   final id = params['id']?.first;
+  final title = params['title']?.first;
   return BlocProvider(
     create: (context) =>
         CategoryFoodCubit(sl<GetProductsByCategoryUseCase>(), id!),
-    child: CategoryFoodPage(),
+    child: CategoryFoodPage(title ?? ""),
+  );
+});
+
+Handler detailFoodHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+  final id = params['id']?.first;
+  return BlocProvider(
+    create: (context) => DetailFoodCubit(sl<GetProductUseCase>(), id!),
+    child: DetailFoodPage(),
   );
 });
