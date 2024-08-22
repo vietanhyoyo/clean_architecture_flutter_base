@@ -16,6 +16,7 @@ import 'package:clean_architecture/features/food/domain/repository/category_repo
 import 'package:clean_architecture/features/food/domain/repository/product_repository.dart';
 import 'package:clean_architecture/features/food/domain/usecases/get_category_list.dart';
 import 'package:clean_architecture/features/food/domain/usecases/get_product.dart';
+import 'package:clean_architecture/features/food/domain/usecases/get_product_list.dart';
 import 'package:clean_architecture/features/food/domain/usecases/get_products_by_category.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/bottom_bar/botton_bar_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/food_main/food_main_cubit.dart';
@@ -48,6 +49,7 @@ Future<void> initializeDependencies() async {
   sl.registerLazySingleton<GetProductsByCategoryUseCase>(
       () => GetProductsByCategoryUseCase(sl()));
   sl.registerSingleton<GetProductUseCase>(GetProductUseCase(sl()));
+  sl.registerSingleton<GetProductListUseCase>(GetProductListUseCase(sl()));
 
   // Blocs
   sl.registerFactory<RemoteArticleBloc>(() => RemoteArticleBloc(sl()));
@@ -55,5 +57,5 @@ Future<void> initializeDependencies() async {
   // Cubits
   sl.registerFactory<FavoriteImageCubit>(() => FavoriteImageCubit(sl()));
   sl.registerFactory<BottomBarCubit>(() => BottomBarCubit());
-  sl.registerFactory<FoodMainCubit>(() => FoodMainCubit(sl()));
+  sl.registerFactory<FoodMainCubit>(() => FoodMainCubit(sl(), sl()));
 }

@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 
 class FoodDetailCard extends StatelessWidget {
   final ProductEntity foodItem;
+  final Function() onTap;
 
-  const FoodDetailCard({super.key, required this.foodItem});
+  const FoodDetailCard(
+      {super.key, required this.foodItem, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,11 @@ class FoodDetailCard extends StatelessWidget {
                 const SizedBox(height: 4.0),
                 Row(
                   children: [
-                    LikeInfo(int.tryParse(foodItem.favorite ?? "0") ?? 0, true),
+                    InkWell(
+                        onTap: onTap,
+                        child: LikeInfo(
+                            int.tryParse(foodItem.favorite ?? "0") ?? 0,
+                            foodItem.isLiked ?? false)),
                     const SizedBox(width: 6.0),
                     FollowInfo(int.tryParse(foodItem.view ?? "0") ?? 0),
                   ],

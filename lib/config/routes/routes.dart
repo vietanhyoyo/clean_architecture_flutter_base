@@ -52,7 +52,7 @@ class Routes {
     );
 
     router.define(
-      "$detailFood/:id",
+      "$detailFood/:id/:title",
       handler: detailFoodHandler,
       transitionType: TransitionType.inFromRight,
     );

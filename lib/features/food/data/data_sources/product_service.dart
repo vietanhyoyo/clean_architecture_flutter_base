@@ -14,4 +14,17 @@ class ProductService {
 
     return ProductModel.fromJson(productData);
   }
+
+  Future<List<ProductModel>> getProductList() async {
+    final String response =
+        await rootBundle.loadString("assets/jsons/product.json");
+
+    final List<dynamic> data = await json.decode(response);
+
+    final List<ProductModel> productData = data.map((item) {
+      return ProductModel.fromJson(item);
+    }).toList();
+
+    return productData;
+  }
 }

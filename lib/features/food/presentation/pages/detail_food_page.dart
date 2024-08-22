@@ -1,38 +1,35 @@
 import 'package:clean_architecture/core/constants/app_colors.dart';
 import 'package:clean_architecture/core/constants/app_text_style.dart';
-import 'package:clean_architecture/features/food/presentation/cubit/detail_food/detail_food_cubit.dart';
+import 'package:clean_architecture/features/food/presentation/cubit/food_main/food_main_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/widgets/follow_info.dart';
 import 'package:clean_architecture/features/food/presentation/widgets/like_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FoodDetaiProp {
-  final String name;
-  final int price;
-  final String image;
-  final int like;
-  final int following;
-  final bool isLiked;
-  final String description;
-  final String ingredients;
-  final String cooking;
+class DetailFoodPage extends StatefulWidget {
+  final String productId;
+  final String title;
+  const DetailFoodPage(this.productId, this.title, {super.key});
 
-  FoodDetaiProp({
-    required this.name,
-    required this.price,
-    required this.image,
-    required this.like,
-    required this.isLiked,
-    required this.following,
-    required this.description,
-    required this.ingredients,
-    required this.cooking,
-  });
+  @override
+  State<DetailFoodPage> createState() => _DetailFoodPageState();
 }
 
-class DetailFoodPage extends StatelessWidget {
-  const DetailFoodPage({super.key});
+class _DetailFoodPageState extends State<DetailFoodPage> {
+  late FoodMainCubit foodMainCubit;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    foodMainCubit = context.read<FoodMainCubit>();
+  }
+
+  @override
+  void dispose() {
+    foodMainCubit.increaseView(widget.productId);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,22 +41,12 @@ class DetailFoodPage extends StatelessWidget {
 
   _buildAppbar(BuildContext context) {
     return AppBar(
-      title: BlocBuilder<DetailFoodCubit, DetailFoodState>(
-        builder: (context, state) {
-          if (state is DetailFoodInitial) {
-            return const Text('Detail');
-          } else if (state is DetailFoodLoaded) {
-            return Text(state.product.title ?? "",
-                style: AppText.titleSM,
-                textAlign: TextAlign.center,
-                softWrap: true,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis);
-          } else {
-            return const Text('Detail');
-          }
-        },
-      ),
+      title: Text(widget.title,
+          style: AppText.titleSM,
+          textAlign: TextAlign.center,
+          softWrap: true,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis),
       actions: const [
         Padding(
           padding: EdgeInsets.all(12.0),
@@ -70,18 +57,19 @@ class DetailFoodPage extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    return BlocBuilder<DetailFoodCubit, DetailFoodState>(
-        builder: (context, state) {
-      if (state is DetailFoodInitial) {
+    return BlocBuilder<FoodMainCubit, FoodMainState>(builder: (context, state) {
+      if (state is FoodMainInitial) {
         return const Center(
           child: CupertinoActivityIndicator(),
         );
-      } else if (state is DetailFoodLoaded) {
+      } else if (state is FoodMainLoaded) {
+        final product =
+            state.productList.firstWhere((item) => item.id == widget.productId);
         return SingleChildScrollView(
           child: Column(children: [
             Stack(children: [
               Image.asset(
-                state.product.image ?? "",
+                product.image ?? "",
                 height: 300,
                 fit: BoxFit.cover,
               ),
@@ -98,8 +86,8 @@ class DetailFoodPage extends StatelessWidget {
                   child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: LikeInfo(
-                          int.tryParse(state.product.favorite ?? "0") ?? 0,
-                          true)),
+                          int.tryParse(product.favorite ?? "0") ?? 0,
+                          product.isLiked ?? false)),
                 ),
               ),
               Positioned(
@@ -115,7 +103,7 @@ class DetailFoodPage extends StatelessWidget {
                   child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: FollowInfo(
-                        int.tryParse(state.product.view ?? "0") ?? 0,
+                        int.tryParse(product.view ?? "0") ?? 0,
                       )),
                 ),
               ),
@@ -123,7 +111,7 @@ class DetailFoodPage extends StatelessWidget {
             Padding(
               padding:
                   const EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
-              child: Text(state.product.intro ?? "", style: AppText.bodySM),
+              child: Text(product.intro ?? "", style: AppText.bodySM),
             ),
             Padding(
               padding: const EdgeInsets.all(12.0),
@@ -145,7 +133,7 @@ class DetailFoodPage extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(state.product.ingredients ?? ""),
+                        child: Text(product.ingredients ?? ""),
                       ),
                     ]),
               ),
@@ -170,7 +158,7 @@ class DetailFoodPage extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(state.product.instructions ?? ""),
+                        child: Text(product.instructions ?? ""),
                       ),
                     ]),
               ),

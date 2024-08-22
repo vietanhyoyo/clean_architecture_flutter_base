@@ -12,4 +12,10 @@ class ProductRepositoryImpl implements ProductRepository {
     final httpResponse = await _producteService.getProduct(id);
     return httpResponse;
   }
+  
+  @override
+  Future<List<ProductEntity>> getProductList() async {
+    final httpResponse = await _producteService.getProductList();
+    return httpResponse;
+  }
 }

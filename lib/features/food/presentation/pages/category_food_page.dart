@@ -1,6 +1,6 @@
 import 'package:clean_architecture/config/routes/application.dart';
 import 'package:clean_architecture/config/routes/routes.dart';
-import 'package:clean_architecture/features/food/presentation/cubit/category_food/category_food_cubit.dart';
+import 'package:clean_architecture/features/food/presentation/cubit/food_main/food_main_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/widgets/food_detail_card.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,8 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategoryFoodPage extends StatelessWidget {
   final String title;
+  final String categoryId;
 
-  const CategoryFoodPage(this.title, {super.key});
+  const CategoryFoodPage(this.title, this.categoryId, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +28,18 @@ class CategoryFoodPage extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    return BlocBuilder<CategoryFoodCubit, CategoryFoodState>(
+    return BlocBuilder<FoodMainCubit, FoodMainState>(
       builder: (context, state) {
-        if (state is CategoryFoodInitial) {
+        if (state is FoodMainInitial) {
           return const Center(
             child: CupertinoActivityIndicator(),
           );
-        } else if (state is CategoryFoodLoaded) {
+        } else if (state is FoodMainLoaded) {
+          final productList = state.productList
+              .where((element) => element.categoryId == categoryId)
+              .toList();
           return ListView.builder(
-            itemCount: state.productList.length,
+            itemCount: productList.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -43,10 +47,16 @@ class CategoryFoodPage extends StatelessWidget {
                     onTap: () {
                       Application.navigateTo(
                           context,
-                          "${Routes.detailFood}/${state.productList[index].id}",
+                          "${Routes.detailFood}/${productList[index].id}/${productList[index].title}",
                           TransitionType.inFromRight);
                     },
-                    child: FoodDetailCard(foodItem: state.productList[index])),
+                    child: FoodDetailCard(
+                        foodItem: productList[index],
+                        onTap: () {
+                          context
+                              .read<FoodMainCubit>()
+                              .toggleIsLiked(productList[index].id ?? "");
+                        })),
               );
             },
           );

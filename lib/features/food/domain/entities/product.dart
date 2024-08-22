@@ -10,6 +10,8 @@ class ProductEntity extends Equatable {
   final String? instructions;
   final String? view;
   final String? favorite;
+  final bool? isLiked;
+  final bool? isViewed;
 
   const ProductEntity(
       {required this.id,
@@ -20,7 +22,9 @@ class ProductEntity extends Equatable {
       required this.ingredients,
       required this.instructions,
       required this.view,
-      required this.favorite});
+      required this.favorite,
+      required this.isLiked,
+      required this.isViewed});
 
   @override
   List<Object?> get props {
@@ -33,7 +37,9 @@ class ProductEntity extends Equatable {
       ingredients,
       instructions,
       view,
-      favorite
+      favorite,
+      isLiked,
+      isViewed
     ];
   }
 }

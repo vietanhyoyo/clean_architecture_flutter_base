@@ -12,7 +12,7 @@ class LikeInfo extends StatelessWidget {
     return Row(children: [
       Icon(Icons.favorite, color: isLike ? AppColors.red : AppColors.grey),
       const SizedBox(width: 4.0),
-      Text(number.toString())
+      Text(isLike ? (number + 1).toString() : number.toString())
     ]);
   }
 }

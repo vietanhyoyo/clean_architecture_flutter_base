@@ -11,11 +11,12 @@ final class FoodMainInitial extends FoodMainState {}
 
 final class FoodMainLoaded extends FoodMainState {
   final List<CategoryEntity> categoryList;
+  final List<ProductEntity> productList;
 
-  const FoodMainLoaded(this.categoryList);
+  const FoodMainLoaded(this.categoryList, this.productList);
 
   @override
-  List<Object> get props => [categoryList];
+  List<Object> get props => [categoryList, productList];
 }
 
 final class FoodMainError extends FoodMainState {

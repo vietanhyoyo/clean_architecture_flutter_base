@@ -63,12 +63,12 @@ class FoodFavoritePage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DetailFoodPage()),
-                  );
-                },
+                // onTap: () {
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(builder: (context) => DetailFoodPage()),
+                //   );
+                // },
                 child: DismissibleCard(foodItem: listFool[index])),
           ),
         );

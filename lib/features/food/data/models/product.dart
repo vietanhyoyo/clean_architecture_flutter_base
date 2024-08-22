@@ -1,16 +1,19 @@
 import 'package:clean_architecture/features/food/domain/entities/product.dart';
 
 class ProductModel extends ProductEntity {
-  const ProductModel(
-      {required super.id,
-      required super.categoryId,
-      required super.title,
-      required super.image,
-      required super.intro,
-      required super.ingredients,
-      required super.instructions,
-      required super.view,
-      required super.favorite});
+  const ProductModel({
+    required super.id,
+    required super.categoryId,
+    required super.title,
+    required super.image,
+    required super.intro,
+    required super.ingredients,
+    required super.instructions,
+    required super.view,
+    required super.favorite,
+    required super.isLiked,
+    required super.isViewed,
+  });
 
   factory ProductModel.fromJson(Map<String, dynamic> map) {
     return ProductModel(
@@ -23,6 +26,8 @@ class ProductModel extends ProductEntity {
       instructions: map['instructions'] ?? "",
       view: map['view'] ?? "",
       favorite: map['favorite'] ?? "",
+      isLiked: false,
+      isViewed: false,
     );
   }
 }

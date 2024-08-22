@@ -1,13 +1,9 @@
+import 'package:clean_architecture/core/providers/cubit_provider.dart';
 import 'package:clean_architecture/features/daily_news/presentation/bloc/article/remote/bloc/remote_article_bloc.dart';
 import 'package:clean_architecture/features/daily_news/presentation/pages/home/daily_news.dart';
 import 'package:clean_architecture/features/favorite_images/presentation/cubit/favorite_image/favorite_image_cubit.dart';
 import 'package:clean_architecture/features/favorite_images/presentation/pages/favorite_images_page.dart';
-import 'package:clean_architecture/features/food/domain/usecases/get_product.dart';
-import 'package:clean_architecture/features/food/domain/usecases/get_products_by_category.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/bottom_bar/botton_bar_cubit.dart';
-import 'package:clean_architecture/features/food/presentation/cubit/category_food/category_food_cubit.dart';
-import 'package:clean_architecture/features/food/presentation/cubit/detail_food/detail_food_cubit.dart';
-import 'package:clean_architecture/features/food/presentation/cubit/food_main/food_main_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/pages/category_food_page.dart';
 import 'package:clean_architecture/features/food/presentation/pages/detail_food_page.dart';
 import 'package:clean_architecture/features/food/presentation/pages/food_main_page.dart';
@@ -55,7 +51,7 @@ Handler foodHomeHandler = Handler(
       MultiBlocProvider(
     providers: [
       BlocProvider(create: (context) => sl<BottomBarCubit>()),
-      BlocProvider(create: (context) => sl<FoodMainCubit>()),
+      BlocProvider.value(value: foodMainCubit),
     ],
     child: FoodMainPage(),
   ),
@@ -65,18 +61,18 @@ Handler categoryFoodHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   final id = params['id']?.first;
   final title = params['title']?.first;
-  return BlocProvider(
-    create: (context) =>
-        CategoryFoodCubit(sl<GetProductsByCategoryUseCase>(), id!),
-    child: CategoryFoodPage(title ?? ""),
+  return BlocProvider.value(
+    value: foodMainCubit,
+    child: CategoryFoodPage(title ?? "", id ?? ""),
   );
 });
 
 Handler detailFoodHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   final id = params['id']?.first;
-  return BlocProvider(
-    create: (context) => DetailFoodCubit(sl<GetProductUseCase>(), id!),
-    child: const DetailFoodPage(),
+  final title = params['title']?.first;
+  return BlocProvider.value(
+    value: foodMainCubit,
+    child: DetailFoodPage(id ?? "", title ?? ""),
   );
 });

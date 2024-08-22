@@ -64,10 +64,10 @@ class FoodViewedPage extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DetailFoodPage()),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => DetailFoodPage()),
+                  // );
                 },
                 child: DismissibleCard(foodItem: listFool[index])),
           ),
