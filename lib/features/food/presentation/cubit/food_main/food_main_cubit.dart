@@ -77,4 +77,54 @@ class FoodMainCubit extends Cubit<FoodMainState> {
       emit(FoodMainLoaded(currentState.categoryList, newProductList));
     }
   }
+
+  void setViewed(String productId) {
+    if (state is FoodMainLoaded) {
+      final currentState = state as FoodMainLoaded;
+
+      final List<ProductEntity> newProductList =
+          currentState.productList.map((item) {
+        return productId == item.id
+            ? ProductModel(
+                id: item.id,
+                categoryId: item.categoryId,
+                title: item.title,
+                image: item.image,
+                intro: item.intro,
+                ingredients: item.ingredients,
+                instructions: item.instructions,
+                view: item.view,
+                favorite: item.favorite,
+                isLiked: item.isLiked,
+                isViewed: true)
+            : item;
+      }).toList();
+      emit(FoodMainLoaded(currentState.categoryList, newProductList));
+    }
+  }
+
+  void unSetViewed(String productId) {
+    if (state is FoodMainLoaded) {
+      final currentState = state as FoodMainLoaded;
+
+      final List<ProductEntity> newProductList =
+          currentState.productList.map((item) {
+        return productId == item.id
+            ? ProductModel(
+                id: item.id,
+                categoryId: item.categoryId,
+                title: item.title,
+                image: item.image,
+                intro: item.intro,
+                ingredients: item.ingredients,
+                instructions: item.instructions,
+                view: item.view,
+                favorite: item.favorite,
+                isLiked: item.isLiked,
+                isViewed: false)
+            : item;
+      }).toList();
+      emit(FoodMainLoaded(currentState.categoryList, newProductList));
+    }
+  }
 }

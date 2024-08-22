@@ -28,6 +28,7 @@ class _DetailFoodPageState extends State<DetailFoodPage> {
   @override
   void dispose() {
     foodMainCubit.increaseView(widget.productId);
+    foodMainCubit.setViewed(widget.productId);
     super.dispose();
   }
 
@@ -85,9 +86,16 @@ class _DetailFoodPageState extends State<DetailFoodPage> {
                   ),
                   child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: LikeInfo(
-                          int.tryParse(product.favorite ?? "0") ?? 0,
-                          product.isLiked ?? false)),
+                      child: InkWell(
+                        onTap: () {
+                          context
+                              .read<FoodMainCubit>()
+                              .toggleIsLiked(widget.productId);
+                        },
+                        child: LikeInfo(
+                            int.tryParse(product.favorite ?? "0") ?? 0,
+                            product.isLiked ?? false),
+                      )),
                 ),
               ),
               Positioned(

@@ -1,3 +1,4 @@
+import 'package:clean_architecture/core/utils/widgets/nodata_widget.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/bottom_bar/botton_bar_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/food_main/food_main_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/pages/food_favorite_page.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FoodMainPage extends StatelessWidget {
-  FoodMainPage({super.key});
+  const FoodMainPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +28,20 @@ class FoodMainPage extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     return BlocBuilder<FoodMainCubit, FoodMainState>(builder: (context, state) {
       if (state is FoodMainLoaded) {
+        final favoriteList =
+            state.productList.where((item) => item.isLiked == true).toList();
+        final viewedList =
+            state.productList.where((item) => item.isViewed == true).toList();
         final List<Widget> pages = [
           FoodHomePage(categoryList: state.categoryList),
-          FoodViewedPage(),
-          FoodFavoritePage()
+          FoodViewedPage(
+            productList: viewedList,
+            handleDismiss: () {},
+          ),
+          FoodFavoritePage(
+            productList: favoriteList,
+            handleDismiss: () {},
+          )
         ];
         return BlocBuilder<BottomBarCubit, int>(
           builder: (context, state) {
@@ -38,7 +49,7 @@ class FoodMainPage extends StatelessWidget {
           },
         );
       } else {
-        return const SizedBox();
+        return const NoDataWidget();
       }
     });
   }

@@ -1,26 +1,9 @@
 import 'package:clean_architecture/core/constants/app_colors.dart';
-import 'package:clean_architecture/core/utils/helper.dart';
+import 'package:clean_architecture/features/food/domain/entities/product.dart';
 import 'package:flutter/material.dart';
 
-class DismissibleCardProp {
-  final String name;
-  final int price;
-  final String image;
-  final int like;
-  final int following;
-  final bool isLiked;
-
-  DismissibleCardProp(
-      {required this.name,
-      required this.price,
-      required this.image,
-      required this.like,
-      required this.isLiked,
-      required this.following});
-}
-
 class DismissibleCard extends StatelessWidget {
-  final DismissibleCardProp foodItem;
+  final ProductEntity foodItem;
 
   const DismissibleCard({super.key, required this.foodItem});
 
@@ -40,8 +23,8 @@ class DismissibleCard extends StatelessWidget {
           ClipRRect(
             borderRadius:
                 const BorderRadius.vertical(top: Radius.circular(6.0)),
-            child:
-                Image.network(foodItem.image, fit: BoxFit.cover, height: 250),
+            child: Image.asset(foodItem.image ?? "",
+                fit: BoxFit.cover, height: 250),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -49,7 +32,7 @@ class DismissibleCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  foodItem.name,
+                  foodItem.title ?? "",
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 16.0),
                 ),
@@ -57,8 +40,7 @@ class DismissibleCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('${Helper.addThousandSeparator(foodItem.price)} VND',
-                        style: TextStyle(color: Colors.grey[600])),
+                    Text("View", style: TextStyle(color: Colors.grey[600])),
                     const Icon(
                       Icons.swipe,
                       size: 30,
