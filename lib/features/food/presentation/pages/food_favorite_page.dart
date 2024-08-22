@@ -18,7 +18,7 @@ class FoodFavoritePage extends StatelessWidget {
       itemCount: productList.length,
       itemBuilder: (context, index) {
         return Dismissible(
-          key: ValueKey<int>(index),
+          key: ValueKey<String>(productList[index].id ?? ""),
           onDismissed: (dismissDirection) {
             context
                 .read<FoodMainCubit>()
