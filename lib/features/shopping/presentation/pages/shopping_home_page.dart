@@ -1,5 +1,11 @@
+import 'package:clean_architecture/core/constants/app_text_style.dart';
+import 'package:clean_architecture/core/utils/widgets/nodata_widget.dart';
+import 'package:clean_architecture/features/shopping/presentation/cubit/category/category_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/widgets/image_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShoppingHomePage extends StatelessWidget {
   const ShoppingHomePage({super.key});
@@ -16,15 +22,67 @@ class ShoppingHomePage extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        Padding(
+        const Padding(
           padding: EdgeInsets.only(top: 12.0),
           child: ImageSlider(),
         ),
         Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Center(child: Text("Shopping"))),
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text("Danh mục sản phẩm", style: AppText.titleMD),
+                  const Text("Tất cả(30)"),
+                ])),
+        SizedBox(
+          height: 100,
+          child: BlocBuilder<CategoryCubit, CategoryState>(
+            builder: (context, state) {
+              if (state is CategoryInitial) {
+                return const Center(
+                  child: CupertinoActivityIndicator(),
+                );
+              } else if (state is CategoryLoaded) {
+                return ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: state.categoryList.length,
+                  separatorBuilder: (context, index) => const Divider(
+                    color: Colors.transparent,
+                    thickness: 1,
+                  ),
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              width: 100,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                      state.categoryList[index].image ?? ""),
+                                  fit: BoxFit.contain,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                          Text(state.categoryList[index].name ?? ""),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return const NoDataWidget();
+              }
+            },
+          ),
+        ),
       ],
     );
   }
