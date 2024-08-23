@@ -8,6 +8,7 @@ import 'package:clean_architecture/features/food/presentation/pages/category_foo
 import 'package:clean_architecture/features/food/presentation/pages/detail_food_page.dart';
 import 'package:clean_architecture/features/food/presentation/pages/food_main_page.dart';
 import 'package:clean_architecture/features/home/presentation/pages/home_page.dart';
+import 'package:clean_architecture/features/shopping/presentation/cubit/category/category_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/slider/slider_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/shopping_home_page.dart';
 import 'package:clean_architecture/features/todo_list/presentation/cubit/todo_list/todo_list_cubit.dart';
@@ -84,6 +85,7 @@ Handler shoppingHomeHandler = Handler(
         MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => sl<SliderCubit>()),
+            BlocProvider(create: (context) => sl<CategoryCubit>()),
           ],
           child: const ShoppingHomePage(),
         ));

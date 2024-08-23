@@ -21,9 +21,14 @@ import 'package:clean_architecture/features/food/domain/usecases/get_products_by
 import 'package:clean_architecture/features/food/presentation/cubit/bottom_bar/botton_bar_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/food_main/food_main_cubit.dart';
 import 'package:clean_architecture/features/shopping/data/data_sources/shopping_api_service.dart';
+import 'package:clean_architecture/features/shopping/data/repository/category_repository_impl.dart' as shopping;
 import 'package:clean_architecture/features/shopping/data/repository/slider_repository_impl.dart';
+import 'package:clean_architecture/features/shopping/domain/repository/category_repository.dart' as shopping;
 import 'package:clean_architecture/features/shopping/domain/repository/slider_repository.dart';
+import 'package:clean_architecture/features/shopping/domain/usecases/get_category_list_usecase.dart'
+    as shopping;
 import 'package:clean_architecture/features/shopping/domain/usecases/get_sliders_usecase.dart';
+import 'package:clean_architecture/features/shopping/presentation/cubit/category/category_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/slider/slider_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -46,6 +51,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<CategoryRepository>(CategoryRepositoryImpl(sl()));
   sl.registerSingleton<ProductRepository>(ProductRepositoryImpl(sl()));
   sl.registerSingleton<SliderRepository>(SliderRepositoryImpl(sl()));
+  sl.registerSingleton<shopping.CategoryRepository>(shopping.CategoryRepositoryImpl(sl()));
 
   // UseCases
   sl.registerSingleton<GetArticleUseCase>(GetArticleUseCase(sl()));
@@ -58,6 +64,8 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetProductUseCase>(GetProductUseCase(sl()));
   sl.registerSingleton<GetProductListUseCase>(GetProductListUseCase(sl()));
   sl.registerSingleton<GetSlidersUseCase>(GetSlidersUseCase(sl()));
+  sl.registerLazySingleton<shopping.GetCategoryListUseCase>(
+      () => shopping.GetCategoryListUseCase(sl()));
 
   // Blocs
   sl.registerFactory<RemoteArticleBloc>(() => RemoteArticleBloc(sl()));
@@ -67,4 +75,5 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<BottomBarCubit>(() => BottomBarCubit());
   sl.registerFactory<FoodMainCubit>(() => FoodMainCubit(sl(), sl()));
   sl.registerFactory<SliderCubit>(() => SliderCubit(sl()));
+  sl.registerFactory<CategoryCubit>(() => CategoryCubit(sl<shopping.GetCategoryListUseCase>()));
 }
