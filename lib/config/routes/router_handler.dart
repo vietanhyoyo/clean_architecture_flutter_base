@@ -8,6 +8,8 @@ import 'package:clean_architecture/features/food/presentation/pages/category_foo
 import 'package:clean_architecture/features/food/presentation/pages/detail_food_page.dart';
 import 'package:clean_architecture/features/food/presentation/pages/food_main_page.dart';
 import 'package:clean_architecture/features/home/presentation/pages/home_page.dart';
+import 'package:clean_architecture/features/shopping/presentation/cubit/slider/slider_cubit.dart';
+import 'package:clean_architecture/features/shopping/presentation/pages/shopping_home_page.dart';
 import 'package:clean_architecture/features/todo_list/presentation/cubit/todo_list/todo_list_cubit.dart';
 import 'package:clean_architecture/features/todo_list/presentation/pages/todo_list/todo_list_page.dart';
 import 'package:clean_architecture/injection_container.dart';
@@ -53,7 +55,7 @@ Handler foodHomeHandler = Handler(
       BlocProvider(create: (context) => sl<BottomBarCubit>()),
       BlocProvider.value(value: foodMainCubit),
     ],
-    child: FoodMainPage(),
+    child: const FoodMainPage(),
   ),
 );
 
@@ -76,3 +78,12 @@ Handler detailFoodHandler = Handler(
     child: DetailFoodPage(id ?? "", title ?? ""),
   );
 });
+
+Handler shoppingHomeHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
+        MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => sl<SliderCubit>()),
+          ],
+          child: const ShoppingHomePage(),
+        ));

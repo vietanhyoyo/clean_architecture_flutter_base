@@ -20,6 +20,11 @@ import 'package:clean_architecture/features/food/domain/usecases/get_product_lis
 import 'package:clean_architecture/features/food/domain/usecases/get_products_by_category.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/bottom_bar/botton_bar_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/food_main/food_main_cubit.dart';
+import 'package:clean_architecture/features/shopping/data/data_sources/shopping_api_service.dart';
+import 'package:clean_architecture/features/shopping/data/repository/slider_repository_impl.dart';
+import 'package:clean_architecture/features/shopping/domain/repository/slider_repository.dart';
+import 'package:clean_architecture/features/shopping/domain/usecases/get_sliders_usecase.dart';
+import 'package:clean_architecture/features/shopping/presentation/cubit/slider/slider_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -34,11 +39,13 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<ImageService>(ImageService());
   sl.registerSingleton<CategoryService>(CategoryService());
   sl.registerSingleton<ProductService>(ProductService());
+  sl.registerSingleton<ShoppingApiService>(ShoppingApiService(sl()));
 
   sl.registerSingleton<ArticleRepository>(ArticleRepositoryImpl(sl()));
   sl.registerSingleton<ImageRepository>(ImageRepositoryImpl(sl()));
   sl.registerSingleton<CategoryRepository>(CategoryRepositoryImpl(sl()));
   sl.registerSingleton<ProductRepository>(ProductRepositoryImpl(sl()));
+  sl.registerSingleton<SliderRepository>(SliderRepositoryImpl(sl()));
 
   // UseCases
   sl.registerSingleton<GetArticleUseCase>(GetArticleUseCase(sl()));
@@ -50,6 +57,7 @@ Future<void> initializeDependencies() async {
       () => GetProductsByCategoryUseCase(sl()));
   sl.registerSingleton<GetProductUseCase>(GetProductUseCase(sl()));
   sl.registerSingleton<GetProductListUseCase>(GetProductListUseCase(sl()));
+  sl.registerSingleton<GetSlidersUseCase>(GetSlidersUseCase(sl()));
 
   // Blocs
   sl.registerFactory<RemoteArticleBloc>(() => RemoteArticleBloc(sl()));
@@ -58,4 +66,5 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<FavoriteImageCubit>(() => FavoriteImageCubit(sl()));
   sl.registerFactory<BottomBarCubit>(() => BottomBarCubit());
   sl.registerFactory<FoodMainCubit>(() => FoodMainCubit(sl(), sl()));
+  sl.registerFactory<SliderCubit>(() => SliderCubit(sl()));
 }

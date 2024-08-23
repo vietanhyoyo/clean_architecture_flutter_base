@@ -10,6 +10,7 @@ class Routes {
   static String foodHome = "/food_home";
   static String categoryFood = "/category_food";
   static String detailFood = "/detail_food";
+  static String shoppingHome = "/shopping_home";
 
   /// Setup route for the app
   static void configureRoutes(FluroRouter router) {
@@ -54,6 +55,12 @@ class Routes {
     router.define(
       "$detailFood/:id/:title",
       handler: detailFoodHandler,
+      transitionType: TransitionType.inFromRight,
+    );
+
+    router.define(
+      shoppingHome,
+      handler: shoppingHomeHandler,
       transitionType: TransitionType.inFromRight,
     );
   }

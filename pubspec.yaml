@@ -71,6 +71,9 @@ dependencies:
   #list image scroller
   flutter_swipe: ^1.0.1
 
+  #image slider
+  carousel_slider: ^5.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
