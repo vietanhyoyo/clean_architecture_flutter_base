@@ -1,3 +1,4 @@
+import 'package:clean_architecture/core/arguments/product_argument.dart';
 import 'package:clean_architecture/core/providers/cubit_provider.dart';
 import 'package:clean_architecture/features/daily_news/presentation/bloc/article/remote/bloc/remote_article_bloc.dart';
 import 'package:clean_architecture/features/daily_news/presentation/pages/home/daily_news.dart';
@@ -8,8 +9,12 @@ import 'package:clean_architecture/features/food/presentation/pages/category_foo
 import 'package:clean_architecture/features/food/presentation/pages/detail_food_page.dart';
 import 'package:clean_architecture/features/food/presentation/pages/food_main_page.dart';
 import 'package:clean_architecture/features/home/presentation/pages/home_page.dart';
+import 'package:clean_architecture/features/shopping/domain/entities/product.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/category/category_cubit.dart';
+import 'package:clean_architecture/features/shopping/presentation/cubit/product_list/product_list_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/slider/slider_cubit.dart';
+import 'package:clean_architecture/features/shopping/presentation/pages/product_info_page.dart';
+import 'package:clean_architecture/features/shopping/presentation/pages/product_list_page.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/shopping_home_page.dart';
 import 'package:clean_architecture/features/todo_list/presentation/cubit/todo_list/todo_list_cubit.dart';
 import 'package:clean_architecture/features/todo_list/presentation/pages/todo_list/todo_list_page.dart';
@@ -89,3 +94,23 @@ Handler shoppingHomeHandler = Handler(
           ],
           child: const ShoppingHomePage(),
         ));
+
+Handler productListHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+  final id = params['id']?.first;
+  final title = params['title']?.first;
+  return BlocProvider(
+    create: (context) => ProductListCubit(sl(), id ?? ""),
+    child: ProductListPage(
+      categoryId: id ?? "",
+      title: title ?? "",
+    ),
+  );
+});
+
+Handler productInfoHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+  final ProductArguments args =
+      ModalRoute.of(context!)!.settings.arguments as ProductArguments;
+  return ProductInfoPage(product: args.product);
+});
