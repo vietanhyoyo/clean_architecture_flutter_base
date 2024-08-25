@@ -20,22 +20,28 @@ import 'package:clean_architecture/features/food/domain/usecases/get_product_lis
 import 'package:clean_architecture/features/food/domain/usecases/get_products_by_category.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/bottom_bar/botton_bar_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/food_main/food_main_cubit.dart';
-import 'package:clean_architecture/features/shopping/data/data_sources/local/storage.dart';
 import 'package:clean_architecture/features/shopping/data/data_sources/shopping_api_service.dart';
 import 'package:clean_architecture/features/shopping/data/repository/auth_repository_impl.dart';
 import 'package:clean_architecture/features/shopping/data/repository/category_repository_impl.dart'
+    as shopping;
+import 'package:clean_architecture/features/shopping/data/repository/product_repository_impl.dart'
     as shopping;
 import 'package:clean_architecture/features/shopping/data/repository/slider_repository_impl.dart';
 import 'package:clean_architecture/features/shopping/domain/repository/auth_repository.dart';
 import 'package:clean_architecture/features/shopping/domain/repository/category_repository.dart'
     as shopping;
+import 'package:clean_architecture/features/shopping/domain/repository/product_repository.dart'
+    as shopping;
 import 'package:clean_architecture/features/shopping/domain/repository/slider_repository.dart';
 import 'package:clean_architecture/features/shopping/domain/usecases/get_category_list_usecase.dart'
+    as shopping;
+import 'package:clean_architecture/features/shopping/domain/usecases/get_product_list_usecase.dart'
     as shopping;
 import 'package:clean_architecture/features/shopping/domain/usecases/get_product_list_of_category_usecase.dart';
 import 'package:clean_architecture/features/shopping/domain/usecases/get_sliders_usecase.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/category/category_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/slider/slider_cubit.dart';
+import 'package:clean_architecture/features/shopping/presentation/cubit/special_product_list/special_product_list_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -60,6 +66,8 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<shopping.CategoryRepository>(
       shopping.CategoryRepositoryImpl(sl()));
   sl.registerSingleton<AuthRepository>(AuthRepositoryImpl(sl()));
+  sl.registerSingleton<shopping.ProductRepository>(
+      shopping.ProductRepositoryImpl(sl()));
 
   // UseCases
   sl.registerSingleton<GetArticleUseCase>(GetArticleUseCase(sl()));
@@ -76,6 +84,8 @@ Future<void> initializeDependencies() async {
       () => shopping.GetCategoryListUseCase(sl()));
   sl.registerLazySingleton<GetProductListOfCategoryUseCase>(
       () => GetProductListOfCategoryUseCase(sl()));
+  sl.registerSingleton<shopping.GetProductListUseCase>(
+      shopping.GetProductListUseCase(sl()));
 
   // Blocs
   sl.registerFactory<RemoteArticleBloc>(() => RemoteArticleBloc(sl()));
@@ -87,4 +97,6 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<SliderCubit>(() => SliderCubit(sl()));
   sl.registerFactory<CategoryCubit>(
       () => CategoryCubit(sl<shopping.GetCategoryListUseCase>()));
+  sl.registerFactory<SpecialProductListCubit>(
+      () => SpecialProductListCubit(sl()));
 }

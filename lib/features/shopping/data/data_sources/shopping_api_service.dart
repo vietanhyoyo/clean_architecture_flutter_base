@@ -26,4 +26,9 @@ abstract class ShoppingApiService {
   Future<HttpResponse<AuthModel>> postLogin(
     @Queries() Map<String, dynamic> queries,
   );
+
+  @GET('/mobile/products')
+  Future<HttpResponse<List<ProductModel>>> getProductList(
+    @Queries() Map<String, dynamic> queries,
+  );
 }

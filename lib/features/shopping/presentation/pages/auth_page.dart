@@ -27,6 +27,8 @@ class _AuthPageState extends State<AuthPage> {
   void hanlerSubmit(BuildContext context) async {
     final email = _emailController.text;
     final password = _passwordController.text;
+    Application.navigateTo(
+              context, Routes.shoppingHome, TransitionType.fadeIn);
 
     if (email.isNotEmpty && password.isNotEmpty) {
       try {

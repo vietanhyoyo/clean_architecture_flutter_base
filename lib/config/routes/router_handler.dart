@@ -12,6 +12,7 @@ import 'package:clean_architecture/features/home/presentation/pages/home_page.da
 import 'package:clean_architecture/features/shopping/presentation/cubit/category/category_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/product_list/product_list_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/slider/slider_cubit.dart';
+import 'package:clean_architecture/features/shopping/presentation/cubit/special_product_list/special_product_list_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/auth_page.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/product_info_page.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/product_list_page.dart';
@@ -91,6 +92,7 @@ Handler shoppingHomeHandler = Handler(
           providers: [
             BlocProvider(create: (context) => sl<SliderCubit>()),
             BlocProvider(create: (context) => sl<CategoryCubit>()),
+            BlocProvider(create: (context) => sl<SpecialProductListCubit>()),
           ],
           child: const ShoppingHomePage(),
         ));
