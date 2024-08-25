@@ -1,5 +1,6 @@
 import 'package:clean_architecture/config/routes/application.dart';
 import 'package:clean_architecture/config/routes/routes.dart';
+import 'package:clean_architecture/core/constants/app_colors.dart';
 import 'package:clean_architecture/core/constants/app_text_style.dart';
 import 'package:clean_architecture/core/utils/widgets/nodata_widget.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/category/category_cubit.dart';
@@ -15,7 +16,47 @@ class ShoppingHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: _buildAppbar(), body: _buildBody(context));
+    return Scaffold(
+        drawer: _drawer(context),
+        appBar: _buildAppbar(),
+        body: _buildBody(context));
+  }
+
+  Widget _drawer(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          const DrawerHeader(
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+            ),
+            child: Text(
+              'Menu',
+              style: TextStyle(
+                color: AppColors.white,
+                fontSize: 24,
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.home),
+            title: const Text('Home'),
+            onTap: () {
+              Navigator.pop(context); 
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text('Log Out'),
+            onTap: () {
+              Navigator.pop(context); 
+              Navigator.pop(context); 
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   _buildAppbar() {

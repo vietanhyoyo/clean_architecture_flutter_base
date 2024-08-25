@@ -20,10 +20,13 @@ import 'package:clean_architecture/features/food/domain/usecases/get_product_lis
 import 'package:clean_architecture/features/food/domain/usecases/get_products_by_category.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/bottom_bar/botton_bar_cubit.dart';
 import 'package:clean_architecture/features/food/presentation/cubit/food_main/food_main_cubit.dart';
+import 'package:clean_architecture/features/shopping/data/data_sources/local/storage.dart';
 import 'package:clean_architecture/features/shopping/data/data_sources/shopping_api_service.dart';
+import 'package:clean_architecture/features/shopping/data/repository/auth_repository_impl.dart';
 import 'package:clean_architecture/features/shopping/data/repository/category_repository_impl.dart'
     as shopping;
 import 'package:clean_architecture/features/shopping/data/repository/slider_repository_impl.dart';
+import 'package:clean_architecture/features/shopping/domain/repository/auth_repository.dart';
 import 'package:clean_architecture/features/shopping/domain/repository/category_repository.dart'
     as shopping;
 import 'package:clean_architecture/features/shopping/domain/repository/slider_repository.dart';
@@ -56,6 +59,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<SliderRepository>(SliderRepositoryImpl(sl()));
   sl.registerSingleton<shopping.CategoryRepository>(
       shopping.CategoryRepositoryImpl(sl()));
+  sl.registerSingleton<AuthRepository>(AuthRepositoryImpl(sl()));
 
   // UseCases
   sl.registerSingleton<GetArticleUseCase>(GetArticleUseCase(sl()));

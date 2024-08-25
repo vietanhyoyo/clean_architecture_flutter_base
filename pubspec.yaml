@@ -74,6 +74,9 @@ dependencies:
   #image slider
   carousel_slider: ^5.0.0
 
+  #local storage
+  shared_preferences: ^2.2.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -8,6 +8,7 @@ class ReusableInput extends StatelessWidget {
   final bool obscureText;
   final Icon? prefixIcon;
   final Function(String)? onChanged;
+  final String? Function(dynamic value)? validator;
 
   const ReusableInput({
     super.key,
@@ -18,6 +19,7 @@ class ReusableInput extends StatelessWidget {
     this.obscureText = false,
     this.prefixIcon,
     this.onChanged,
+    this.validator,
   });
 
   @override
@@ -30,19 +32,21 @@ class ReusableInput extends StatelessWidget {
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),
-        TextField(
+        TextFormField(
           controller: controller,
           keyboardType: keyboardType,
           obscureText: obscureText,
           decoration: InputDecoration(
             hintText: hintText,
             prefixIcon: prefixIcon,
-             contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
           ),
           onChanged: onChanged,
+          validator: validator,
         ),
       ],
     );

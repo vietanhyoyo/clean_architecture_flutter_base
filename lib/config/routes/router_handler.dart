@@ -9,10 +9,10 @@ import 'package:clean_architecture/features/food/presentation/pages/category_foo
 import 'package:clean_architecture/features/food/presentation/pages/detail_food_page.dart';
 import 'package:clean_architecture/features/food/presentation/pages/food_main_page.dart';
 import 'package:clean_architecture/features/home/presentation/pages/home_page.dart';
-import 'package:clean_architecture/features/shopping/domain/entities/product.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/category/category_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/product_list/product_list_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/slider/slider_cubit.dart';
+import 'package:clean_architecture/features/shopping/presentation/pages/auth_page.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/product_info_page.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/product_list_page.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/shopping_home_page.dart';
@@ -114,3 +114,7 @@ Handler productInfoHandler = Handler(
       ModalRoute.of(context!)!.settings.arguments as ProductArguments;
   return ProductInfoPage(product: args.product);
 });
+
+Handler authHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
+        const AuthPage());

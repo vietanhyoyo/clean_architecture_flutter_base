@@ -52,7 +52,8 @@ class HomePage extends StatelessWidget {
           _buildCard(
             context,
             title: 'Shopping',
-            route: Routes.shoppingHome,
+            route: Routes.auth,
+            // route: Routes.shoppingHome,
             icon: Icons.shopping_bag,
           ),
         ],
