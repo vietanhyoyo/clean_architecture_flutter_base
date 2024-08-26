@@ -14,6 +14,7 @@ import 'package:clean_architecture/features/shopping/presentation/cubit/product_
 import 'package:clean_architecture/features/shopping/presentation/cubit/slider/slider_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/special_product_list/special_product_list_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/auth_page.dart';
+import 'package:clean_architecture/features/shopping/presentation/pages/cart_page.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/product_info_page.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/product_list_page.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/shopping_home_page.dart';
@@ -93,6 +94,7 @@ Handler shoppingHomeHandler = Handler(
             BlocProvider(create: (context) => sl<SliderCubit>()),
             BlocProvider(create: (context) => sl<CategoryCubit>()),
             BlocProvider(create: (context) => sl<SpecialProductListCubit>()),
+            BlocProvider.value(value: cartCubit),
           ],
           child: const ShoppingHomePage(),
         ));
@@ -120,3 +122,11 @@ Handler productInfoHandler = Handler(
 Handler authHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
         const AuthPage());
+
+Handler cartHandler = Handler(
+  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+    return MultiBlocProvider(providers: [
+      BlocProvider.value(value: cartCubit),
+    ], child: const CartPage());
+  },
+);

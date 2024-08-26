@@ -4,13 +4,14 @@ import 'package:clean_architecture/core/constants/app_colors.dart';
 import 'package:clean_architecture/core/constants/app_text_style.dart';
 import 'package:clean_architecture/core/utils/helper.dart';
 import 'package:clean_architecture/core/utils/widgets/nodata_widget.dart';
+import 'package:clean_architecture/features/shopping/domain/entities/cart_item.dart';
+import 'package:clean_architecture/features/shopping/presentation/cubit/cart/cart_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/category/category_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/special_product_list/special_product_list_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/widgets/image_slider.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShoppingHomePage extends StatelessWidget {
@@ -20,7 +21,7 @@ class ShoppingHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: _drawer(context),
-        appBar: _buildAppbar(),
+        appBar: _buildAppbar(context),
         body: _buildBody(context));
   }
 
@@ -49,6 +50,13 @@ class ShoppingHomePage extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.shopping_bag),
+            title: const Text('Đơn hàng đã mua'),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Log Out'),
             onTap: () {
@@ -61,9 +69,49 @@ class ShoppingHomePage extends StatelessWidget {
     );
   }
 
-  _buildAppbar() {
+  _buildAppbar(BuildContext context) {
     return AppBar(
       title: const Text('Shopping'),
+      actions: [
+        BlocBuilder<CartCubit, CartState>(builder: (context, state) {
+          if (state is CartInitial) {
+            return const Center(
+              child: CupertinoActivityIndicator(),
+            );
+          } else if (state is CartLoaded) {
+            int number =
+                state.cartList.length; 
+
+            if (number > 0) {
+              return Badge(
+                label: Text(number.toString()),
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: const Icon(Icons.shopping_cart_outlined),
+                  onPressed: () {
+                    Application.navigateTo(
+                      context,
+                      Routes.cart,
+                      TransitionType.inFromRight,
+                    );
+                  },
+                ),
+              );
+            }
+          }
+          // Default case when number <= 0 or other states
+          return IconButton(
+            icon: const Icon(Icons.shopping_cart_outlined),
+            onPressed: () {
+              Application.navigateTo(
+                context,
+                Routes.cart,
+                TransitionType.inFromRight,
+              );
+            },
+          );
+        }),
+      ],
     );
   }
 
@@ -172,7 +220,20 @@ class ShoppingHomePage extends StatelessWidget {
                             title: Text(state.productList[index].name ?? ""),
                             subtitle: Text(
                                 "${Helper.addThousandSeparator(state.productList[index].price ?? 0)} vnđ"),
-                            trailing: const Icon(Icons.shopping_cart),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.shopping_cart),
+                              onPressed: () {
+                                context
+                                    .read<CartCubit>()
+                                    .addCart(CartItemEntity(
+                                      id: state.productList[index].id,
+                                      name: state.productList[index].name,
+                                      image: state.productList[index].image,
+                                      price: state.productList[index].price,
+                                      quantity: 1,
+                                    ));
+                              },
+                            ),
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) {

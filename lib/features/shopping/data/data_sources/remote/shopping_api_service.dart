@@ -1,5 +1,6 @@
 import 'package:clean_architecture/core/constants/constants.dart';
 import 'package:clean_architecture/features/shopping/data/models/auth.dart';
+import 'package:clean_architecture/features/shopping/data/models/bill.dart';
 import 'package:clean_architecture/features/shopping/data/models/category.dart';
 import 'package:clean_architecture/features/shopping/data/models/product.dart';
 import 'package:clean_architecture/features/shopping/data/models/slider.dart';
@@ -29,6 +30,11 @@ abstract class ShoppingApiService {
 
   @GET('/mobile/products')
   Future<HttpResponse<List<ProductModel>>> getProductList(
+    @Queries() Map<String, dynamic> queries,
+  );
+
+  @POST('/mobile/orders/save')
+  Future<HttpResponse<BillModel>> postMakeOrder(
     @Queries() Map<String, dynamic> queries,
   );
 }

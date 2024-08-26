@@ -2,22 +2,22 @@ import 'dart:io';
 
 import 'package:clean_architecture/core/resources/data_state.dart';
 import 'package:clean_architecture/features/shopping/data/data_sources/remote/shopping_api_service.dart';
-import 'package:clean_architecture/features/shopping/domain/entities/auth.dart';
-import 'package:clean_architecture/features/shopping/domain/repository/auth_repository.dart';
+import 'package:clean_architecture/features/shopping/domain/entities/bill.dart';
+import 'package:clean_architecture/features/shopping/domain/repository/cart_repository.dart';
 import 'package:dio/dio.dart';
 
-class AuthRepositoryImpl implements AuthRepository {
+class CartRepositoryImpl implements CartRepository {
   final ShoppingApiService _shoppingApiService;
 
-  AuthRepositoryImpl(this._shoppingApiService);
+  CartRepositoryImpl(this._shoppingApiService);
 
   @override
-  Future<DataState<AuthEntity>> postLogin(Map<String, String> params) async {
+  Future<DataState<BillEntity>> postMakeOrder(
+      Map<String, dynamic> params) async {
     try {
-      final httpResponse = await _shoppingApiService
-          .postLogin(params);
+      final httpResponse = await _shoppingApiService.postMakeOrder(params);
 
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
+      if (httpResponse.response.statusCode == HttpStatus.created) {
         return DataSuccess(httpResponse.data);
       } else {
         return DataFailed(

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:clean_architecture/core/resources/data_state.dart';
-import 'package:clean_architecture/features/shopping/data/data_sources/shopping_api_service.dart';
+import 'package:clean_architecture/features/shopping/data/data_sources/remote/shopping_api_service.dart';
 import 'package:clean_architecture/features/shopping/domain/entities/product.dart';
 import 'package:clean_architecture/features/shopping/domain/repository/product_repository.dart';
 import 'package:dio/dio.dart';

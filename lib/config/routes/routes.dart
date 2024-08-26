@@ -14,6 +14,7 @@ class Routes {
   static String productList = "/shopping_product_list";
   static String productInfo = "/product_info";
   static String auth = "/auth";
+  static String cart = "/cart";
 
   /// Setup route for the app
   static void configureRoutes(FluroRouter router) {
@@ -82,6 +83,12 @@ class Routes {
     router.define(
       auth,
       handler: authHandler,
+      transitionType: TransitionType.inFromRight,
+    );
+
+    router.define(
+      cart,
+      handler: cartHandler,
       transitionType: TransitionType.inFromRight,
     );
   }
