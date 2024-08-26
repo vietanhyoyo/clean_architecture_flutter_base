@@ -37,4 +37,7 @@ abstract class ShoppingApiService {
   Future<HttpResponse<BillModel>> postMakeOrder(
     @Queries() Map<String, dynamic> queries,
   );
+
+  @GET('/mobile/orders')
+  Future<HttpResponse<List<BillModel>>> getHistory();
 }

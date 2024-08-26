@@ -26,6 +26,7 @@ import 'package:clean_architecture/features/shopping/data/repository/auth_reposi
 import 'package:clean_architecture/features/shopping/data/repository/cart_repository_impl.dart';
 import 'package:clean_architecture/features/shopping/data/repository/category_repository_impl.dart'
     as shopping;
+import 'package:clean_architecture/features/shopping/data/repository/order_repository_impl.dart';
 import 'package:clean_architecture/features/shopping/data/repository/product_repository_impl.dart'
     as shopping;
 import 'package:clean_architecture/features/shopping/data/repository/slider_repository_impl.dart';
@@ -33,11 +34,13 @@ import 'package:clean_architecture/features/shopping/domain/repository/auth_repo
 import 'package:clean_architecture/features/shopping/domain/repository/cart_repository.dart';
 import 'package:clean_architecture/features/shopping/domain/repository/category_repository.dart'
     as shopping;
+import 'package:clean_architecture/features/shopping/domain/repository/order_repository.dart';
 import 'package:clean_architecture/features/shopping/domain/repository/product_repository.dart'
     as shopping;
 import 'package:clean_architecture/features/shopping/domain/repository/slider_repository.dart';
 import 'package:clean_architecture/features/shopping/domain/usecases/get_category_list_usecase.dart'
     as shopping;
+import 'package:clean_architecture/features/shopping/domain/usecases/get_history_list_usacase.dart';
 import 'package:clean_architecture/features/shopping/domain/usecases/get_product_list_usecase.dart'
     as shopping;
 import 'package:clean_architecture/features/shopping/domain/usecases/get_product_list_of_category_usecase.dart';
@@ -45,6 +48,7 @@ import 'package:clean_architecture/features/shopping/domain/usecases/get_sliders
 import 'package:clean_architecture/features/shopping/domain/usecases/post_make_order_usecase.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/cart/cart_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/category/category_cubit.dart';
+import 'package:clean_architecture/features/shopping/presentation/cubit/history/history_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/slider/slider_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/special_product_list/special_product_list_cubit.dart';
 import 'package:dio/dio.dart';
@@ -74,6 +78,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<shopping.ProductRepository>(
       shopping.ProductRepositoryImpl(sl()));
   sl.registerSingleton<CartRepository>(CartRepositoryImpl(sl()));
+  sl.registerSingleton<OrderRepository>(OrderRepositoryImpl(sl()));
 
   // UseCases
   sl.registerSingleton<GetArticleUseCase>(GetArticleUseCase(sl()));
@@ -93,6 +98,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<shopping.GetProductListUseCase>(
       shopping.GetProductListUseCase(sl()));
   sl.registerSingleton<PostMakeOrderUseCase>(PostMakeOrderUseCase(sl()));
+  sl.registerSingleton<GetHistoryUseCase>(GetHistoryUseCase(sl()));
 
   // Blocs
   sl.registerFactory<RemoteArticleBloc>(() => RemoteArticleBloc(sl()));
@@ -107,4 +113,5 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<SpecialProductListCubit>(
       () => SpecialProductListCubit(sl()));
   sl.registerFactory<CartCubit>(() => CartCubit(sl()));
+  sl.registerFactory<HistoryCubit>(() => HistoryCubit(sl()));
 }

@@ -54,6 +54,11 @@ class ShoppingHomePage extends StatelessWidget {
             title: const Text('Đơn hàng đã mua'),
             onTap: () {
               Navigator.pop(context);
+              Application.navigateTo(
+                context,
+                Routes.history,
+                TransitionType.inFromRight,
+              );
             },
           ),
           ListTile(
@@ -79,8 +84,7 @@ class ShoppingHomePage extends StatelessWidget {
               child: CupertinoActivityIndicator(),
             );
           } else if (state is CartLoaded) {
-            int number =
-                state.cartList.length; 
+            int number = state.cartList.length;
 
             if (number > 0) {
               return Badge(

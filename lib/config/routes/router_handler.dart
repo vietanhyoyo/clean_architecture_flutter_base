@@ -10,11 +10,13 @@ import 'package:clean_architecture/features/food/presentation/pages/detail_food_
 import 'package:clean_architecture/features/food/presentation/pages/food_main_page.dart';
 import 'package:clean_architecture/features/home/presentation/pages/home_page.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/category/category_cubit.dart';
+import 'package:clean_architecture/features/shopping/presentation/cubit/history/history_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/product_list/product_list_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/slider/slider_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/special_product_list/special_product_list_cubit.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/auth_page.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/cart_page.dart';
+import 'package:clean_architecture/features/shopping/presentation/pages/history_page.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/product_info_page.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/product_list_page.dart';
 import 'package:clean_architecture/features/shopping/presentation/pages/shopping_home_page.dart';
@@ -130,3 +132,10 @@ Handler cartHandler = Handler(
     ], child: const CartPage());
   },
 );
+
+Handler historyHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
+        BlocProvider(
+          create: (context) => sl<HistoryCubit>(),
+          child: const HistoryPage(),
+        ));

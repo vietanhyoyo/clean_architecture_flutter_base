@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Helper {
   static String addThousandSeparator(int number) {
     // Convert the number to a string
@@ -21,5 +23,10 @@ class Helper {
 
     // Reverse the buffer to get the correctly formatted string
     return buffer.toString().split('').reversed.join('');
+  }
+
+  static String formatDate(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    return DateFormat('HH:mm - dd/MM/yyyy').format(dateTime);
   }
 }
