@@ -75,7 +75,7 @@ class _AuthPageState extends State<AuthPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text("Shopping", style: AppText.titleLG),
+                    Text("Shopping", style: AppText.titlePrimaryLG),
                     const SizedBox(height: 32.0),
                     ReusableInput(
                       controller: _emailController,

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppText {
+  static TextStyle titlePrimaryLG =
+      TextStyle(fontSize: AppDimens.d24.sp, fontWeight: FontWeight.w700, color: AppColors.primary);
   static TextStyle titleLG =
       TextStyle(fontSize: AppDimens.d24.sp, fontWeight: FontWeight.w700);
   static TextStyle titleMD =

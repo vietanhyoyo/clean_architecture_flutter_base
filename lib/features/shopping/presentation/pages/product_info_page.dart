@@ -35,11 +35,14 @@ class ProductInfoPage extends StatelessWidget {
           actions: const [
             Padding(
               padding: EdgeInsets.all(12.0),
-              child: Icon(Icons.menu, size: 30, color: Colors.transparent),
+              child: Icon(Icons.menu, size: 40, color: Colors.transparent),
             )
           ],
           flexibleSpace: FlexibleSpaceBar(
-            title: Text(product.name ?? "", style: AppText.titleSM,),
+            title: Padding(
+              padding: const EdgeInsets.only(right: 30.0),
+              child: Text(product.name ?? "", style: AppText.titleSM,),
+            ),
             background: Padding(
                 padding: const EdgeInsets.all(60),
                 child: Image(
