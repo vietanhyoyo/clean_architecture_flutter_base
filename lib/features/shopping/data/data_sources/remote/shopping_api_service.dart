@@ -40,4 +40,9 @@ abstract class ShoppingApiService {
 
   @GET('/mobile/orders')
   Future<HttpResponse<List<BillModel>>> getHistory();
+
+  @GET('/mobile/products/{id}')
+  Future<HttpResponse<ProductModel>> getProductDetails(
+    @Path("id") String id,
+  );
 }

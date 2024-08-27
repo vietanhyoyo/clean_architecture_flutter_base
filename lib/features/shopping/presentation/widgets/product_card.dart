@@ -1,7 +1,6 @@
 import 'package:clean_architecture/core/constants/app_colors.dart';
 import 'package:clean_architecture/features/shopping/domain/entities/product.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductEntity product;

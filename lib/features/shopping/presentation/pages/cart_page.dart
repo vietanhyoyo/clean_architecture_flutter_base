@@ -66,7 +66,7 @@ class CartPage extends StatelessWidget {
           );
         } else if (state is CartLoaded) {
           if (state.cartList.isEmpty) {
-            return NoDataWidget();
+            return const NoDataWidget();
           }
           return ListView.separated(
             itemBuilder: (BuildContext context, int index) {

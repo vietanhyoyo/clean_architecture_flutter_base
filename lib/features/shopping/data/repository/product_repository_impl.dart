@@ -27,4 +27,20 @@ class ProductRepositoryImpl implements ProductRepository {
       return DataFailed(e);
     }
   }
+
+  @override
+  Future<DataState<ProductEntity>> getProductDetails(String params) async {
+    try {
+      final httpResponse = await _shoppingApiService.getProductDetails(params);
+
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(
+            DioException(requestOptions: httpResponse.response.requestOptions));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
 }

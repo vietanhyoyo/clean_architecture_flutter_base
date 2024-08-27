@@ -2,6 +2,7 @@ import 'package:clean_architecture/core/constants/app_text_style.dart';
 import 'package:clean_architecture/core/utils/helper.dart';
 import 'package:clean_architecture/core/utils/widgets/nodata_widget.dart';
 import 'package:clean_architecture/features/shopping/presentation/cubit/history/history_cubit.dart';
+import 'package:clean_architecture/features/shopping/presentation/widgets/bill_product_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -69,8 +70,11 @@ class HistoryPage extends StatelessWidget {
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount:
                                     state.orderList[index].orderItems!.length,
-                                itemBuilder: (context, index) {
-                                  return Text("name");
+                                itemBuilder: (context, id) {
+                                  final int productId = state.orderList[index]
+                                          .orderItems![id].productId ??
+                                      0;
+                                  return BillProductInfo(productId);
                                 })
                           ]),
                     ),
