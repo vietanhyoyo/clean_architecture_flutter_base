@@ -1,13 +1,21 @@
 import 'package:clean_architecture/config/routes/routes.dart';
 import 'package:clean_architecture/core/constants/app_colors.dart';
+import 'package:clean_architecture/core/utils/widgets/theme_switcher_button.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final ValueNotifier<ThemeMode> themeNotifier;
+
+  const HomePage({super.key, required this.themeNotifier});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: _buildAppbar(), body: _buildBody(context));
+    return Scaffold(
+      appBar: _buildAppbar(),
+      body: _buildBody(context),
+      floatingActionButton: ThemeSwitcherButton(themeNotifier: themeNotifier),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
   }
 
   _buildAppbar() {

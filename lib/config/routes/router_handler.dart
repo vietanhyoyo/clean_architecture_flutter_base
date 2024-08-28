@@ -1,3 +1,4 @@
+import 'package:clean_architecture/config/theme/app_themes.dart';
 import 'package:clean_architecture/core/arguments/product_argument.dart';
 import 'package:clean_architecture/core/providers/cubit_provider.dart';
 import 'package:clean_architecture/features/daily_news/presentation/bloc/article/remote/bloc/remote_article_bloc.dart';
@@ -38,7 +39,9 @@ Handler notHandler = Handler(
 
 Handler homeHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
-        const HomePage());
+        HomePage(
+          themeNotifier: AppTheme.themeNotifier,
+        ));
 
 Handler articleHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>

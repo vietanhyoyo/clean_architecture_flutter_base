@@ -29,14 +29,19 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
         designSize: const Size(360, 690),
         builder: (_, child) {
-          return MaterialApp(
-            title: 'Flutter Demo',
-            debugShowCheckedModeBanner: false,
-            themeMode: ThemeMode.light,
-            theme: AppTheme.currentTheme.lightTheme,
-            darkTheme: AppTheme.currentTheme.darkTheme,
-            onGenerateRoute: Application.router?.generator,
-            initialRoute: Routes.home,
+          return ValueListenableBuilder<ThemeMode>(
+            valueListenable: AppTheme.themeNotifier,
+            builder: (_, ThemeMode currentMode, __) {
+              return MaterialApp(
+                title: 'Flutter Demo',
+                debugShowCheckedModeBanner: false,
+                theme: AppTheme.currentTheme.lightTheme,
+                darkTheme: AppTheme.currentTheme.darkTheme,
+                themeMode: currentMode,
+                onGenerateRoute: Application.router?.generator,
+                initialRoute: Routes.home,
+              );
+            },
           );
         });
   }
